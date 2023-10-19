@@ -8,7 +8,6 @@ import { CalendarIcon, DeleteIcon } from "@chakra-ui/icons";
 //Component
 import ListeTask from "@/component/ListTaxk";
 
-
 interface Task {
   title: String;
   description: String;
@@ -79,7 +78,7 @@ export default function Home() {
               </Flex>
             </Flex> 
             <Divider orientation='vertical' />
-            <Flex  justify={'center'} h={'20%'} direction={"column"} m={2}  width={{ base: "100%", sm:'50%',md:"50%",lg:"50%"}} align={'center'} >
+            <Flex  justify={'center'} h={'20%'} direction={"column"} m={2}  width={{ base: "100%", sm:'50%', md:"50%",lg:"50%"}} align={'center'} >
               <Flex width={'100%'} p={4} align={'center'} justify={'space-between'}  m={{ base: '0', md: '5', lg: "5"}} >
                 <Text  fontWeight={700} color={"gray.400"} fontFamily={theme.fonts.body} >
                     New Task
@@ -91,18 +90,17 @@ export default function Home() {
               <FormControl mt={5} mb={5} width={'100%'} >
                 <Textarea value={newTask.description} onChange={handleChange} name="description" size={"sm"} placeholder='description' />
               </FormControl>
-              { newTask.title && <Button onClick={addTask} bgColor={'black'} color={'white'}>Ajouter</Button>}
+              { newTask.title && <Button onClick={addTask} bgColor={'black'} p={5} color={'white'}>Add</Button>}
             </Flex>
             <Flex direction={'column'} width={{ base: "100%", sm:'30%',md:"30%",lg:"30%"}} >
               <Flex width={'100%'} p={4} align={'center'} justify={'space-between'}  m={{ base: '0', md: '5', lg: "5"}} >
                 <Text  fontWeight={700} color={"black.400"} fontFamily={theme.fonts.body} >
                    All tasks
                 </Text>
-                <IconButton  aria-label='filter'/>
               </Flex>
               <Flex w={"100%"}  direction={'column'}>
                   {
-                  listTask &&  listTask.map(({title, description, completed}, index) =><Box  m={0} flexDirection={'column'} h={'-moz-initial'} w={{ base: "100%", md: '100%', lg:"100%"}} bg={'gray.100'}>
+                  listTask &&  listTask.map(({title, description, completed}, index) =><Box  m={0} flexDirection={'column'} h={'-moz-initial'} w={{ base: "100%", md: '100%', lg:"100%"}} >
                   <Flex boxShadow={"2xl"} pb={2} pt={2} pr={4} pl={4} borderRadius={15} m={2}  width={'-moz-fit-content'} align={'center'} justify={'space-between'} direction={'row'}>
                     <Checkbox  sx={{
                       h: '20px',
