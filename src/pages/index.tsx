@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { Heading,Stack, Text, Box, Flex,IconButton, Icon, Input, FormControl, Button, VStack, HStack, Divider, Link, LinkOverlay, Checkbox } from "@chakra-ui/react";
-
-//Component
 import theme from "@/styles/theme";
 import { useState } from "react";
 import { Textarea } from "@chakra-ui/react";
 import { CalendarIcon, DeleteIcon } from "@chakra-ui/icons";
+
+//Component
 import ListeTask from "@/component/ListTaxk";
 
 
