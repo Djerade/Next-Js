@@ -90,7 +90,7 @@ export default function Home() {
               <FormControl mt={5} mb={5} width={'100%'} >
                 <Textarea value={newTask.description} onChange={handleChange} name="description" size={"sm"} placeholder='description' />
               </FormControl>
-              { newTask.title && <Button onClick={addTask} bgColor={'black'} p={5} color={'white'}>Add</Button>}
+              { newTask.title && <Button padding={"24px"} width={{base: "100px", sm: "150px", md: "150px", lg: "150px"}}  _hover={{ bg:"gray",color:"white"}} onClick={addTask} bgColor={'black'} p={5} color={'white'}>Add</Button>}
             </Flex>
             <Flex direction={'column'} width={{ base: "100%", sm:'30%',md:"30%",lg:"30%"}} >
               <Flex width={'100%'} p={4} align={'center'} justify={'space-between'}  m={{ base: '0', md: '5', lg: "5"}} >
