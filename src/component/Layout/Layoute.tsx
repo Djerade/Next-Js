@@ -1,8 +1,10 @@
-import { Box, Center } from "@chakra-ui/react";
+import { Box, Center, Drawer, DrawerContent, Flex, useDisclosure} from "@chakra-ui/react";
 import Head from "next/dist/shared/lib/head";
 import SidebarContent from "../Sidebars";
+import Header from "../Header/header";
 
 function Layout( {children}: any ) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
     return(
         <>
         <Head>
@@ -11,13 +13,15 @@ function Layout( {children}: any ) {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
-        {/*
-        sidebare 
-         */}
-         <SidebarContent/>
-        <Box ml={{ base: 0, sm : 60}}>
-            {children}
-        </Box>
+        <Flex  w={'100%'} direction={'row'} >
+            <SidebarContent   />
+            <Flex w={'100%'} direction={'column'} >
+                <Header/>
+                <Box  h={'100%'} w={'full'}  >
+                    {children}
+                </Box>
+            </Flex>
+        </Flex>
         {/* Footer here */}
         </>
     )
