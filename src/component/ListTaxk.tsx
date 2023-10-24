@@ -11,7 +11,7 @@ const ListeTask = ( props: {
     const { title, description, completed} = props;
 
     return (
-    <Flex maxW={{ base: "90%", sm: "90%", md: "90%", lg: "90%"}} direction={'column'}>
+    <Flex  ml={10} direction={'column'}>
         <Text as={'h2'} fontSize={20}  variant=''> {title}</Text>
         <Text  fontSize={14} >
             {description}

@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Box, Flex , Icon, ListItem, Text, Heading, Divider } from "@chakra-ui/react"
@@ -36,11 +35,6 @@ const LinkItems: Array<SideNave> = [
       },
     ];
 
-    const subrillance = () => {
-        return(
-            <Box h={"full"} w={'10%'} bg={'red'} />
-        )
-    }
 
 const NaveItem = ({ label, icon, to}: SideNave) => {
     const pathname = usePathname();
@@ -57,15 +51,14 @@ const NaveItem = ({ label, icon, to}: SideNave) => {
           justify={'start'}
           cursor={'pointer'}
           _hover={{
-            bg: "black",
-            color: "white",
+            color: "black",
           }}>
             <Flex width={"100%"} justify={'space-between'} align={'center'}>
                 <Flex align={'center'}>
                     <Icon boxSize={'22px'} as={icon} />
                     <Text fontFamily={theme.fonts.DrawerBody} fontSize={'18px'} ml={3} >{label}</Text>
                 </Flex>
-            <Flex h={'30px'}  borderRadius={'lg'} bg={'gray.300'} w={"5px"}/>
+            <Flex h={'28px'}  borderRadius={'lg'} bg={'black'} w={"5px"}/>
             </Flex>
           </Flex>
           :<Flex 
@@ -77,8 +70,7 @@ const NaveItem = ({ label, icon, to}: SideNave) => {
           color={'gray.400'}
           cursor={'pointer'}
           _hover={{
-            bg: "black",
-            color: "white",
+            color: "black",
           }}  >
                 <Icon boxSize={'22px'} as={icon} />
                 <Text fontFamily={theme.fonts.DrawerBody} fontSize={'18px'} ml={3} >{label}</Text>

@@ -86,23 +86,27 @@ const Home: NextPage<Props> = ({}) => {
           <Flex w={"100%"}  direction={'column'}>
               {
               listTask &&  listTask.map(({title, description, completed}, index) =><Box  m={0} flexDirection={'column'} h={'-moz-initial'} w={{ base: "100%", md: '100%', lg:"100%"}} >
-              <Flex boxShadow={"2xl"} pb={2} pt={2} pr={4} pl={4} borderRadius={15} m={2}  width={'-moz-fit-content'} align={'center'} justify={'space-between'} direction={'row'}>
-                <Checkbox  sx={{
-                  h: '20px',
-                  borderColor:'none',
-                  px: "12px",
-                      _hover: {
-                        bg: 'gray',
-                        h: "40px",
-                        borderRadius: '30px',
-                      },
-                      _checked: {
-                        bg: 'gray',
-                        h: "40px",
-                        borderRadius: '30px',
-                      }
-                }} colorScheme="gray" onChange={() => doneTask(index)} />
-                <ListeTask title={title} description={description} completed={completed}  />
+              <Flex boxShadow={"xl"} pb={2} pt={2} pr={4} pl={4} borderRadius={15} m={2}  width={'-moz-fit-content'} align={'center'} justify={'space-between'} direction={'row'}>
+                <Flex align={'center'}>
+                  <Checkbox
+                    mr={{ base:  14, small: 14, md:14, lg:14}}
+                    sx={{
+                    h: '20px',
+                    borderColor:'none',
+                    px: "12px",
+                    _hover: {
+                      bg: 'gray',
+                      h: "40px",
+                      borderRadius: '30px',
+                    },
+                    _checked: {
+                      bg: 'gray',
+                      h: "40px",
+                      borderRadius: '30px',
+                    }
+                  }} colorScheme="gray" onChange={() => doneTask(index)} />
+                  <ListeTask title={title} description={description} completed={completed}  />
+                </Flex>
                 <IconButton onClick={() => deleteTask(index)} aria-label={"delete"} icon={<DeleteIcon/>} />
               </Flex>
               </Box> )
