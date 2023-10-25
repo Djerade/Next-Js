@@ -4,6 +4,10 @@ import { Box, Flex , Icon, ListItem, Text, Heading, Divider } from "@chakra-ui/r
 import { useRouter } from "next/router";
 import { IconType } from "react-icons";
 import { FaHistory } from "react-icons/fa";
+import { MdToday } from "react-icons/Md";
+import { MdCalendarToday } from "react-icons/Md";
+
+
 
 import { FiGrid, FiPieChart } from "react-icons/fi";
 import { Route } from "react-router-dom";
@@ -24,15 +28,20 @@ const LinkItems: Array<SideNave> = [
       to:'/',
     },
     {
-        label: 'Next day',
-        icon: FiGrid,
-        to:'/NextDay',
-      },
-      {
-        label: 'Historique',
-        icon: FaHistory,
-        to:'/Historic',
-      },
+      label: 'ToDay',
+      icon: MdToday ,
+      to:'/MyDay',
+     },
+    {
+     label: 'Next day',
+      icon:  MdCalendarToday ,
+      to:'/NextDay',
+    },
+    {
+     label: 'Historique',
+     icon: FaHistory,
+     to:'/Historic',
+     },
     ];
 
 
@@ -90,7 +99,7 @@ const SidebarContent = ({}) => {
             justifyItems={"center"}
             position={"sticky"}
             p={4}
-            
+            display={{ base: 'none', sm: "block", md: "block", lg:"block"}}
             bg={'#F6F6F6'}
             height={'900px'}
          >
@@ -113,3 +122,5 @@ const SidebarContent = ({}) => {
 }
 
 export default SidebarContent;
+
+

@@ -6,19 +6,21 @@ import { FiBell } from "react-icons/fi";
 const Header = () => {
     const data = new Date()
     return(
-        <Flex shadow={'sm'}   position={'sticky'} p={4} justify={'space-between'} h={"100px"}  w={'full'} direction={'row'} >
+        <Flex shadow={'sm'} position={'sticky'} p={4} justify={{ base: "center", sm: "space-between", md: "space-between", lg:"space-between"}} h={{ base: "75px", small:"100px"}}  w={'full'} direction={'row'} >
             <Flex>
                 <InputGroup>
-                  <Input w={"md"} placeholder='Search' />
+                    <Input w={{ base: "xs", sm: "sm", md:"md", lg:"lg"}} placeholder='Search' />
                   <InputRightElement>
-                    <Icon color={'gray.500'} as={Search2Icon} />
+                    <Icon bgSize={'xs'} color={'gray.500'} as={Search2Icon} />
                   </InputRightElement>
                 </InputGroup>
             </Flex>
-            <HStack align={'center'}  spacing={9} mr={9}>
-                <Text fontFamily={theme.fonts.body} color={'gray.500'}>{data.toLocaleDateString("en-US")}</Text>
-                <Icon color={'gray.500'} boxSize={'34px'} as={FiBell} />
-            </HStack>
+            <Flex display={{ base: "none", sm: "block", md:"block", lg:'block'}}>
+                <HStack  align={'center'}  spacing={9} mr={9}>
+                    <Text fontSize={{ base: 'xs', sm:"sm", md:"md", lg:"lg"}} fontFamily={theme.fonts.body} color={'gray.500'}>{data.toLocaleDateString("en-US")}</Text>
+                    <Icon color={'gray.500'} boxSize={'34px'} as={FiBell} />
+                </HStack>
+            </Flex>
         </Flex>
     )
 }

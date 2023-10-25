@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Textarea } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Outlet } from "react-router-dom";
+import { RiFilter3Fill } from "react-icons/ri";
 
 //Component
 import ListeTask from "@/component/ListTaxk";
@@ -17,7 +18,7 @@ interface Task {
   completed: Boolean;
 }
 
-const Home: NextPage<Props> = ({}) => {
+const ToDay: NextPage<Props> = ({}) => {
   const [listTask, setlistTask] = useState<Task[]>([])
   const [newTask, setnewTask] = useState({
     title: '',
@@ -82,6 +83,7 @@ const Home: NextPage<Props> = ({}) => {
             <Text  fontWeight={700} color={"black.400"} fontFamily={theme.fonts.body} >
                All tasks
             </Text>
+            <IconButton bg={'white'} boxSize={"30px"} icon={<RiFilter3Fill />} aria-label={''}/>
           </Flex>
           <Flex w={"100%"}  direction={'column'}>
               {
@@ -118,4 +120,4 @@ const Home: NextPage<Props> = ({}) => {
   </>
 }
 
-export default Home
+export default ToDay

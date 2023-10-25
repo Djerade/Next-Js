@@ -14,7 +14,7 @@ function Layout( {children}: any ) {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <Flex  w={'100%'} direction={'row'} >
-            <SidebarContent   />
+            <SidebarContent/>
             <Flex w={'100%'} direction={'column'} >
                 <Header/>
                 <Box h={'100%'} w={'full'}  >
