@@ -17,7 +17,7 @@ function Layout( {children}: any ) {
             <SidebarContent   />
             <Flex w={'100%'} direction={'column'} >
                 <Header/>
-                <Box  h={'100%'} w={'full'}  >
+                <Box h={'100%'} w={'full'}  >
                     {children}
                 </Box>
             </Flex>

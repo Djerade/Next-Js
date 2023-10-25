@@ -11,13 +11,13 @@ const Header = () => {
                 <InputGroup>
                   <Input w={"md"} placeholder='Search' />
                   <InputRightElement>
-                    <Icon as={Search2Icon} />
+                    <Icon color={'gray.500'} as={Search2Icon} />
                   </InputRightElement>
                 </InputGroup>
             </Flex>
             <HStack align={'center'}  spacing={9} mr={9}>
                 <Text fontFamily={theme.fonts.body} color={'gray.500'}>{data.toLocaleDateString("en-US")}</Text>
-                <Icon boxSize={'34px'} as={FiBell} />
+                <Icon color={'gray.500'} boxSize={'34px'} as={FiBell} />
             </HStack>
         </Flex>
     )

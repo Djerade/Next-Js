@@ -31,7 +31,7 @@ const LinkItems: Array<SideNave> = [
       {
         label: 'Historique',
         icon: FaHistory,
-        to:'',
+        to:'/Historic',
       },
     ];
 

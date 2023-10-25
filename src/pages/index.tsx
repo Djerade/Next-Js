@@ -65,7 +65,7 @@ const Home: NextPage<Props> = ({}) => {
         <Divider orientation='vertical' />
         <Flex  justify={'center'} direction={"column"} m={2}  width={{ base: "100%", sm:'50%', md:"50%",lg:"50%"}} align={'center'} >
           <Flex width={'100%'} p={4} align={'center'} justify={'space-between'}  m={{ base: '0', md: '5', lg: "5"}} >
-            <Text  fontWeight={700} color={"gray.400"} fontFamily={theme.fonts.body} >
+            <Text  fontWeight={700}  fontFamily={theme.fonts.body} >
                 New Task
             </Text>
           </Flex>
