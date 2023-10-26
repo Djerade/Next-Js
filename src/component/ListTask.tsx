@@ -7,7 +7,6 @@ const ListeTask = ( props: {
     description: String,
     completed: Boolean
 }) => {
-
     const { title, description, completed} = props;
     return (
     <Flex  ml={10} direction={'column'}>

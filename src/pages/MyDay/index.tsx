@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 import { RiFilter3Fill } from "react-icons/ri";
 
 //Component
-import ListeTask from "@/component/ListTaxk";
+import ListeTask from "@/component/ListTask";
 
 
 interface Props {}

@@ -7,7 +7,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { Outlet } from "react-router-dom";
 
 //Component
-import ListeTask from "@/component/ListTaxk";
+import ListeTask from "@/component/ListTask";
 
 
 interface Props {}
