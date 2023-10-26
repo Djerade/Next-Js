@@ -62,7 +62,7 @@ const ToDay: NextPage<Props> = ({}) => {
   return <>
     <Stack p={2} pr={5} justify={'center'}  width={'100%'} alignItems={'center'}  direction={{ base: 'column', md: "column", lg: 'column'}} spacing={0}>
       <Flex width={'100%'} direction={{  base: 'column', sm:"row", md:'row', lg:'row'}}>
-         <Outlet />
+         {/* <Outlet /> */}
         <Divider orientation='vertical' />
         <Flex  justify={'center'} direction={"column"} m={2}  width={{ base: "100%", sm:'50%', md:"50%",lg:"50%"}} align={'center'} >
           <Flex width={'100%'} p={4} align={'center'} justify={'space-between'}  m={{ base: '0', md: '5', lg: "5"}} >

@@ -1,16 +1,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Box, Flex , Icon, ListItem, Text, Heading, Divider } from "@chakra-ui/react"
-import { useRouter } from "next/router";
+import { Box, Flex , Icon, Text, Heading, Divider } from "@chakra-ui/react"
 import { IconType } from "react-icons";
 import { FaHistory } from "react-icons/fa";
 import { MdToday } from "react-icons/Md";
 import { MdCalendarToday } from "react-icons/Md";
 
-
-
-import { FiGrid, FiPieChart } from "react-icons/fi";
-import { Route } from "react-router-dom";
+import { FiPieChart } from "react-icons/fi";
 
 //Component
 import theme from "@/styles/theme";
@@ -48,7 +44,6 @@ const LinkItems: Array<SideNave> = [
 const NaveItem = ({ label, icon, to}: SideNave) => {
     const pathname = usePathname();
     const active = to === pathname;
-
     return(
         <Link  href={to}>
           {active
@@ -89,9 +84,6 @@ const NaveItem = ({ label, icon, to}: SideNave) => {
 }
 
 const SidebarContent = ({}) => {
- 
-
-
     return (
         <Box
             w={'25%'}    
