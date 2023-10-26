@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { Stack, Text, Box, Flex,IconButton, Input, FormControl, Button, Divider, Checkbox, Heading, HStack } from "@chakra-ui/react";
+import { Stack, Text, Box, Flex,IconButton, Input, FormControl, Button, Divider, Checkbox, Heading, HStack, TableContainer, Thead, Table, Th, Tr } from "@chakra-ui/react";
 import theme from "@/styles/theme";
 import { useState } from "react";
 import { Textarea } from "@chakra-ui/react";
@@ -32,7 +32,7 @@ const Home: NextPage<Props> = ({}) => {
     </Flex>
     <Flex justify={'space-between'}>
       <HStack spacing={5}>
-        <Input h={{ base: 6, sm: 7, md: 8, lg:9 }} placeholder='Filter tasks...'  size={'md'} w={{ base: "xs", sm: "xs", md: "xs", lg: "xs" }} />
+        <Input fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} placeholder='Filter tasks...'  size={'md'} w={{ base: "xs", sm: "xs", md: "xs", lg: "xs" }} />
         <Button fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} fontWeight={'normal'} color={'gray.700'}  borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
             Status
         </Button>
@@ -40,10 +40,30 @@ const Home: NextPage<Props> = ({}) => {
             Priority
         </Button>
       </HStack>
-      <Button fontSize={14} display={{base: "none", sm:"block"}} h={{ base: 6, sm: 7, md: 8, lg:9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
+      <Button fontSize={14} display={{base: "none", sm:"block"}} h={{ base: 6, sm: 7, md: 8, lg: 9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
          View
       </Button>
     </Flex>
+    <TableContainer>
+      <Table>
+        <Thead>
+          <Tr>
+            <Th>
+              Task
+            </Th>
+            <Th>
+              Title
+            </Th>
+            <Th>
+              Status
+            </Th>
+            <Th>
+              Priority
+            </Th>
+          </Tr>
+        </Thead>
+      </Table>
+    </TableContainer>
   </Flex>
 }
 
