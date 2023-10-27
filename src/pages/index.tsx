@@ -13,12 +13,25 @@ import Image from 'next/image';
 import ListeTask from "@/component/ListTask";
 import { log } from 'console';
 import { FiPlusCircle } from 'react-icons/fi';
+import { BsChevronExpand } from "react-icons/bs";
 
 
 interface Props {}
 
 
-const Home: NextPage<Props> = ({}) => {
+const Home: NextPage<Props> = ({ }) => {
+  const headerTask = [
+    {
+      name: ' Title'
+    },
+    {
+      name: 'Status'
+    },
+    {
+      name: 'Priority'
+    }
+  ];
+
 
   return <Flex  p={5}  direction={'column'}>
     <Flex w={'100%'} align={'center'} justify={'space-between'}>
@@ -44,26 +57,35 @@ const Home: NextPage<Props> = ({}) => {
          View
       </Button>
     </Flex>
-    <TableContainer>
+    <Flex mt={4} borderRadius={8} width={'100%'} borderWidth={'1px'}>
+      <TableContainer width={'100%'}>
       <Table>
         <Thead>
-          <Tr>
-            <Th>
-              Task
-            </Th>
-            <Th>
-              Title
-            </Th>
-            <Th>
-              Status
-            </Th>
-            <Th>
-              Priority
-            </Th>
+            <Tr>
+              <Th>
+                <Checkbox  size=''>
+                  <Text color={'gray.500'} variant=''>
+                    Task
+                  </Text>
+                </Checkbox>
+              </Th>
+              {
+                headerTask.map((name) => (
+                <Th>
+                <Button _hover={{
+                  bg: "gray.100",
+                  color: "black"
+                }} rightIcon={<BsChevronExpand />} fontSize={12} bg={'white'} color={'gray.500'}>
+                  {name.name}
+                </Button>
+                </Th>  
+                ))
+              }
           </Tr>
         </Thead>
       </Table>
     </TableContainer>
+    </Flex>
   </Flex>
 }
 
