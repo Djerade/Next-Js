@@ -1,20 +1,14 @@
 import { NextPage } from 'next'
-import { Stack, Text, Box, Flex,IconButton, Input, FormControl, Button, Divider, Checkbox, Heading, HStack, TableContainer, Thead, Table, Th, Tr } from "@chakra-ui/react";
+import { Text, Box, Flex,Input, Button, Checkbox, Heading, HStack, TableContainer, Thead, Table, Th, Tr, Icon,Tbody, Td } from "@chakra-ui/react";
 import theme from "@/styles/theme";
-import { useState } from "react";
-import { Textarea } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { Outlet } from "react-router-dom";
 import logo from 'public/assets/03.png';
 import Image from 'next/image';
 
 
 //Component
-import ListeTask from "@/component/ListTask";
-import { log } from 'console';
-import { FiPlusCircle } from 'react-icons/fi';
+import { FiArrowRight, FiPlusCircle } from 'react-icons/fi';
+import { LuAlarmMinus } from "react-icons/lu";
 import { BsChevronExpand } from "react-icons/bs";
-
 
 interface Props {}
 
@@ -29,6 +23,9 @@ const Home: NextPage<Props> = ({ }) => {
     },
     {
       name: 'Priority'
+    },
+    {
+      name: ''
     }
   ];
 
@@ -82,7 +79,32 @@ const Home: NextPage<Props> = ({ }) => {
                 ))
               }
           </Tr>
-        </Thead>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>
+                <Checkbox size='sm'>
+                  TASK 584
+                </Checkbox>
+              </Td>
+              <Td>
+                 <Text color={'gray.900'} fontSize={'sm'} variant=''>You can't compress the program without quantifying the open-source SSD</Text>
+              </Td>
+              <Td>
+                <HStack spacing={1}>
+                  <Icon color={'gray.400'} boxSize={('15px')} as={LuAlarmMinus}/>
+                  <Text color={'gray.400'} fontSize={'sm'} variant=''>in Progress</Text>
+                </HStack>
+              </Td>
+              <Td>
+                <HStack spacing={1}>
+                  <Icon color={'gray.400'} boxSize={('15px')} as={FiArrowRight}/>
+                  <Text color={'gray.400'} fontSize={'sm'} variant=''>Medium</Text>
+                </HStack>
+              </Td>
+              <Td>...</Td>
+            </Tr>
+          </Tbody>
       </Table>
     </TableContainer>
     </Flex>
