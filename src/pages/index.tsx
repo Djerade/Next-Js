@@ -9,7 +9,8 @@ import Image from 'next/image';
 import { FiArrowRight, FiPlusCircle } from 'react-icons/fi';
 import { LuAlarmMinus } from "react-icons/lu";
 import { BsChevronExpand } from "react-icons/bs";
-
+import { MdOutlineTaskAlt } from 'react-icons/Md';
+import { AiOutlineArrowUp } from 'react-icons/ai';
 interface Props {}
 
 
@@ -23,17 +24,31 @@ const Home: NextPage<Props> = ({ }) => {
     },
     {
       name: 'Priority'
-    },
-    {
-      name: ''
     }
   ];
+
+  const task = [
+    {
+      id : 542,
+      title: 'Documentation',
+      description: "You can't compress the program without quantifying the open-source SSD pix",
+      priority: 'Medium',
+      Status: 'Progress'
+    },
+    {
+      id : 542,
+      title: 'Documentation',
+      description: "You can't compress the program without quantifying the open-source SSD pix",
+      priority: 'High',
+      Status: 'Todo'
+    }
+  ]
 
 
   return <Flex  p={5}  direction={'column'}>
     <Flex w={'100%'} align={'center'} justify={'space-between'}>
     <Flex mb={7} direction={'column'}>
-      <Heading  as='h2' size='lg' mb={1} >Welcome back!</Heading>
+      <Heading  as='h3' size='lg' mb={1} >Welcome back!</Heading>
       <Text color={'gray.400'} fontFamily={theme.fonts.body} >Here's a list of your tasks for this month !</Text>
     </Flex>
     <Box mr={5} w={{ base:"35px", sm:"35px", md:"35px", lg:"40px"}}>
@@ -72,16 +87,18 @@ const Home: NextPage<Props> = ({ }) => {
                 <Button _hover={{
                   bg: "gray.100",
                   color: "black"
-                }} rightIcon={<BsChevronExpand />} fontSize={12} bg={'white'} color={'gray.500'}>
+                }} rightIcon={<BsChevronExpand />} fontSize={14} bg={'white'} color={'gray.500'}>
                   {name.name}
                 </Button>
-                </Th>  
+                  </Th>
+
                 ))
               }
+               <Th></Th>
           </Tr>
           </Thead>
           <Tbody>
-            <Tr>
+            {/* <Tr>
               <Td>
                 <Checkbox size='sm'>
                   TASK 584
@@ -92,18 +109,49 @@ const Home: NextPage<Props> = ({ }) => {
               </Td>
               <Td>
                 <HStack spacing={1}>
-                  <Icon color={'gray.400'} boxSize={('15px')} as={LuAlarmMinus}/>
-                  <Text color={'gray.400'} fontSize={'sm'} variant=''>in Progress</Text>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={LuAlarmMinus}/>
+                  <Text color={'gray.700'} fontSize={'sm'} variant=''>in Progress</Text>
                 </HStack>
               </Td>
               <Td>
                 <HStack spacing={1}>
-                  <Icon color={'gray.400'} boxSize={('15px')} as={FiArrowRight}/>
-                  <Text color={'gray.400'} fontSize={'sm'} variant=''>Medium</Text>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={FiArrowRight}/>
+                  <Text color={'gray.700'} fontSize={'sm'} variant=''>Medium</Text>
                 </HStack>
               </Td>
               <Td>...</Td>
+            </Tr> */}
+            {
+              task.map((t) => (
+                        <Tr>
+              <Td>
+                <Checkbox size='sm'>
+                  TASK {t.id}
+                </Checkbox>
+              </Td>
+              <Td>
+                    <Text color={'gray.900'} fontSize={'sm'} variant=''>{ t.description}</Text>
+              </Td>
+              <Td>
+                <HStack spacing={1}>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={t.Status === 'Progress'? LuAlarmMinus : MdOutlineTaskAlt }/>
+                      <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.Status}</Text>
+                </HStack>
+              </Td>
+              <Td>
+                <HStack spacing={1}>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={t.priority === 'Medium'? FiArrowRight : AiOutlineArrowUp}/>
+                      <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.priority}</Text>
+                </HStack>
+              </Td>
+                  <Td>
+                    <Text fontSize={'lg'} color={'black'} variant=''>
+                      ...
+                    </Text>
+                  </Td>
             </Tr>
+              ))
+            }
           </Tbody>
       </Table>
     </TableContainer>
