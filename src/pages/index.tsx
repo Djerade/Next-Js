@@ -1,16 +1,17 @@
 import { NextPage } from 'next'
-import { Text, Box, Flex,Input, Button, Checkbox, Heading, HStack, TableContainer, Thead, Table, Th, Tr, Icon,Tbody, Td } from "@chakra-ui/react";
+import { Text, Box, Flex,Input, Button, Checkbox, Heading, HStack, TableContainer, Thead, Table, Th, Tr, Icon,Tbody, Td, IconButton } from "@chakra-ui/react";
 import theme from "@/styles/theme";
 import logo from 'public/assets/03.png';
 import Image from 'next/image';
 
 
 //Component
-import { FiArrowRight, FiPlusCircle } from 'react-icons/fi';
+import { FiArrowRight, FiPlusCircle, FiMoreHorizontal } from 'react-icons/fi';
 import { LuAlarmMinus } from "react-icons/lu";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdOutlineTaskAlt } from 'react-icons/Md';
 import { AiOutlineArrowUp } from 'react-icons/ai';
+
 interface Props {}
 
 
@@ -41,8 +42,24 @@ const Home: NextPage<Props> = ({ }) => {
       description: "You can't compress the program without quantifying the open-source SSD pix",
       priority: 'High',
       Status: 'Todo'
+    },
+        {
+      id : 542,
+      title: 'Documentation',
+      description: "You can't compress the program without quantifying the open-source SSD pix",
+      priority: 'Medium',
+      Status: 'Progress'
+    },
+    {
+      id : 542,
+      title: 'Documentation',
+      description: "You can't compress the program without quantifying the open-source SSD pix",
+      priority: 'High',
+      Status: 'Todo'
     }
   ]
+
+  // progress, backlog, todo, canceled, done
 
 
   return <Flex  p={5}  direction={'column'}>
@@ -98,29 +115,6 @@ const Home: NextPage<Props> = ({ }) => {
           </Tr>
           </Thead>
           <Tbody>
-            {/* <Tr>
-              <Td>
-                <Checkbox size='sm'>
-                  TASK 584
-                </Checkbox>
-              </Td>
-              <Td>
-                 <Text color={'gray.900'} fontSize={'sm'} variant=''>You can't compress the program without quantifying the open-source SSD</Text>
-              </Td>
-              <Td>
-                <HStack spacing={1}>
-                  <Icon color={'gray.700'} boxSize={('15px')} as={LuAlarmMinus}/>
-                  <Text color={'gray.700'} fontSize={'sm'} variant=''>in Progress</Text>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack spacing={1}>
-                  <Icon color={'gray.700'} boxSize={('15px')} as={FiArrowRight}/>
-                  <Text color={'gray.700'} fontSize={'sm'} variant=''>Medium</Text>
-                </HStack>
-              </Td>
-              <Td>...</Td>
-            </Tr> */}
             {
               task.map((t) => (
                         <Tr>
@@ -135,19 +129,17 @@ const Home: NextPage<Props> = ({ }) => {
               <Td>
                 <HStack spacing={1}>
                   <Icon color={'gray.700'} boxSize={('15px')} as={t.Status === 'Progress'? LuAlarmMinus : MdOutlineTaskAlt }/>
-                      <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.Status}</Text>
+                  <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.Status}</Text>
                 </HStack>
               </Td>
               <Td>
                 <HStack spacing={1}>
                   <Icon color={'gray.700'} boxSize={('15px')} as={t.priority === 'Medium'? FiArrowRight : AiOutlineArrowUp}/>
-                      <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.priority}</Text>
+                  <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.priority}</Text>
                 </HStack>
               </Td>
                   <Td>
-                    <Text fontSize={'lg'} color={'black'} variant=''>
-                      ...
-                    </Text>
+                    <IconButton _hover={{ bg: "white"}} bg={'white'} icon={<FiMoreHorizontal/>} aria-label={''} />
                   </Td>
             </Tr>
               ))
