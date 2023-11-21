@@ -3,14 +3,14 @@ import { Text, Box, Flex,Input, Button, Checkbox, Heading, HStack, TableContaine
 import theme from "@/styles/theme";
 import logo from 'public/assets/03.png';
 import Image from 'next/image';
-
-
-//Component
+import { RiEqualizerLine } from "react-icons/ri";
 import { FiArrowRight, FiPlusCircle, FiMoreHorizontal } from 'react-icons/fi';
 import { LuAlarmMinus } from "react-icons/lu";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdOutlineTaskAlt } from 'react-icons/Md';
 import { AiOutlineArrowUp } from 'react-icons/ai';
+
+
 
 interface Props {}
 
@@ -82,7 +82,7 @@ const Home: NextPage<Props> = ({ }) => {
             Priority
         </Button>
       </HStack>
-      <Button fontSize={14} display={{base: "none", sm:"block"}} h={{ base: 6, sm: 7, md: 8, lg: 9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
+      <Button fontSize={14} display={{base: "none", sm:"block"}} h={{ base: 6, sm: 7, md: 8, lg: 9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<RiEqualizerLine /> }>
          View
       </Button>
     </Flex>
