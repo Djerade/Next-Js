@@ -1,7 +1,5 @@
 import { Box, Center, Drawer, DrawerContent, Flex, useDisclosure} from "@chakra-ui/react";
 import Head from "next/dist/shared/lib/head";
-import SidebarContent from "../Sidebars";
-import Header from "../Header/header";
 
 function Layout( {children}: any ) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -14,9 +12,7 @@ function Layout( {children}: any ) {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <Flex  w={'100%'} direction={'row'} >
-            <SidebarContent/>
             <Flex w={'100%'} direction={'column'} >
-                <Header/>
                 <Box h={'100%'} w={'full'}  >
                     {children}
                 </Box>
