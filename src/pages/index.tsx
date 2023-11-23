@@ -9,13 +9,25 @@ import { LuAlarmMinus } from "react-icons/lu";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdOutlineTaskAlt } from 'react-icons/Md';
 import { AiOutlineArrowUp } from 'react-icons/ai';
+import { useQuery } from '@apollo/client';
+
+//Mutation
+import { GET_TASKS } from "../graphQl/Queries/getTask";
+import { useState } from 'react';
 
 
+interface Props { }
 
-interface Props {}
+interface Task {
+  title: String;
+  description: String;
+  status: String;
+  priority: String;
+}
 
 
 const Home: NextPage<Props> = ({ }) => {
+
   const headerTask = [
     {
       name: ' Title'
@@ -28,40 +40,17 @@ const Home: NextPage<Props> = ({ }) => {
     }
   ];
 
-  const task = [
-    {
-      id : 542,
-      title: 'Documentation',
-      description: "You can't compress the program without quantifying the open-source SSD pix",
-      priority: 'Medium',
-      Status: 'Progress'
+  const { loading, data, error } = useQuery(GET_TASKS, {
+    onCompleted: (data) =>{
+    console.log('our data',data);
+    }, onError(error) {
+      console.log('Error:', error.message);
     },
-    {
-      id : 542,
-      title: 'Documentation',
-      description: "You can't compress the program without quantifying the open-source SSD pix",
-      priority: 'High',
-      Status: 'Todo'
-    },
-        {
-      id : 542,
-      title: 'Documentation',
-      description: "You can't compress the program without quantifying the open-source SSD pix",
-      priority: 'Medium',
-      Status: 'Progress'
-    },
-    {
-      id : 542,
-      title: 'Documentation',
-      description: "You can't compress the program without quantifying the open-source SSD pix",
-      priority: 'High',
-      Status: 'Todo'
-    }
-  ]
+  });
+
+  if (loading) return <p>Loading...</p>;
 
   // progress, backlog, todo, canceled, done
-
-
   return <Flex  p={5}  direction={'column'}>
     <Flex w={'100%'} align={'center'} justify={'space-between'}>
     <Flex mb={7} direction={'column'}>
@@ -108,7 +97,6 @@ const Home: NextPage<Props> = ({ }) => {
                   {name.name}
                 </Button>
                   </Th>
-
                 ))
               }
                <Th></Th>
@@ -116,20 +104,23 @@ const Home: NextPage<Props> = ({ }) => {
           </Thead>
           <Tbody>
             {
-              task.map((t) => (
-                        <Tr>
+              data.getAllTasks.map((t: Task) => (
+              <Tr>
               <Td>
                 <Checkbox size='sm'>
-                  TASK {t.id}
+                  TASK 
                 </Checkbox>
               </Td>
               <Td>
-                    <Text color={'gray.900'} fontSize={'sm'} variant=''>{ t.description}</Text>
+                 <HStack spacing={3}>
+                   <Text color={'gray.900'} fontSize={'sm'} variant=''>{ t.title}</Text>
+                   <Text color={'gray.400'} fontSize={'sm'} variant=''>{ t.description}</Text>
+                 </HStack>
               </Td>
               <Td>
                 <HStack spacing={1}>
-                  <Icon color={'gray.700'} boxSize={('15px')} as={t.Status === 'Progress'? LuAlarmMinus : MdOutlineTaskAlt }/>
-                  <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.Status}</Text>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={t.status === 'Progress'? LuAlarmMinus : MdOutlineTaskAlt }/>
+                  <Text color={'gray.700'} fontSize={'sm'} variant=''>{ t.status}</Text>
                 </HStack>
               </Td>
               <Td>
