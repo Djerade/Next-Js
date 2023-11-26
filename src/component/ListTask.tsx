@@ -16,6 +16,7 @@ import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
 //Queries
 import { GET_TASKS } from "@/graphQl/Queries/getTask";
 import { PopoverArrow } from "@chakra-ui/react";
+import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
 interface Task {
   _id: any
   title: string;
@@ -62,15 +63,19 @@ const ListeTask = () => {
       console.log(error.message);
     },
   })
+
+  const [detete,{}] = useMutation(DELETE_TASK,{variables:{id:Id}})
+
   
   const editTask = () => {
-    console.log('edite');
-    
+   
   }
 
-  const deleteTask = () => {
-    console.log('delete');
+  const deleteTask = (id: any) => {
+    setId(id)
+    console.log(id);
     
+    detete()
   }
 
   const taskDone = (id: any, status: string) => {
@@ -152,7 +157,7 @@ const ListeTask = () => {
                           <PopoverBody>
                             <Stack>
                               <IconButton onClick={editTask} _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2 />} aria-label={''} />
-                              <IconButton onClick={deleteTask} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
+                              <IconButton onClick={() =>deleteTask(t._id)} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
                             </Stack>
                           </PopoverBody>
                         </PopoverContent>
