@@ -22,10 +22,10 @@ import { CREATE_TASK } from '@/graphQl/Mutation/createTask';
 
 interface Props { }
 interface Task{
-  title: String;
-  description: String;
-  priority: String;
-  status: String;
+  title: string;
+  description: string;
+  priority: string;
+  status: string;
 }
 const Home: NextPage<Props> = ({ }) => {
 
@@ -37,27 +37,27 @@ const Home: NextPage<Props> = ({ }) => {
     title: "",
     description: "",
     priority: "",
-    status:""
+    status:"todo"
   });
-
   const [create, { data, loading, error }] = useMutation(CREATE_TASK, {
     variables:{
       title: value.title,
       description: value.description,
       status: value.status,
       priority: value.priority
-    }, onCompleted: (newData) => {
-      console.log("Data:",newData);
+    }, onCompleted: (data) => {
+      console.log("Data:",data);
     }
   });
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
-    console.log('ici');
-    
-    create()
+  const handleChange = (event: any) => {
+    setvalue({
+      ...value,
+      [event.target.name]: event.target.value
+    })
   }
-
-  
+  const handleSubmit = () => {  
+    create()
+  }  
   return <Flex justifySelf={'center'}  p={5}  direction={'column'}>
     <Flex justifySelf={'center'}  w={'100%'} align={'center'} justify={'space-between'}>
       <Flex   mb={7} direction={'column'}>
@@ -95,19 +95,17 @@ const Home: NextPage<Props> = ({ }) => {
           <ModalHeader >Create task</ModalHeader>
           <ModalBody>
             <form onSubmit={handleSubmit}>
-              <FormControl>
-                <FormLabel></FormLabel>
-                <Input  placeholder='Title'/>
+              <FormControl isRequired>
+                <Input value={value.title} name='title' type='text' onChange={handleChange} placeholder='Title'/>
               </FormControl>
-              <FormControl mt={5}>
-                <FormLabel></FormLabel>
-                <Textarea placeholder='Description'/>
+              <FormControl isRequired mt={5}>
+                <Textarea value={value.description} name='description'  onChange={handleChange} placeholder='Description'/>
               </FormControl>
-              <FormControl mt={5}>
-                <Select >
-                  <option>High</option>
-                  <option>Medium</option>
-                  <option>Low</option>
+              <FormControl isRequired mt={5}>
+                <Select value={value.priority} name='priority' onChange={handleChange} >
+                  <option value='High'>High</option>
+                  <option value='Medium'>Medium</option>
+                  <option value='Low'>Low</option>
                 </Select>
               </FormControl>
             </form>
@@ -116,7 +114,7 @@ const Home: NextPage<Props> = ({ }) => {
             <Button colorScheme="gray" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button bg={'black'} onClick={handleSubmit} color={"white"} >Save</Button>
+            <Button bg={'black'} onClick={() =>{onClose(), handleSubmit()}} color={"white"} >Save</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -128,6 +126,4 @@ const Home: NextPage<Props> = ({ }) => {
 
 export default Home
 
-function useState(arg0: { title: string; description: string; }): [any, any] {
-  throw new Error('Function not implemented.');
-}
+

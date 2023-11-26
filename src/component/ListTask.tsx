@@ -1,21 +1,28 @@
 import { Box, Text,Flex, HStack,IconButton, Icon, VStack,  List, ListItem, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import { PhoneIcon, AddIcon, WarningIcon, DeleteIcon } from '@chakra-ui/icons'
 import { MdOutlineTaskAlt } from "react-icons/Md";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
 import { FiArrowRight, FiMoreHorizontal } from "react-icons/fi";
 import { LuAlarmMinus } from "react-icons/lu";
 import { GET_TASKS } from "@/graphQl/Queries/getTask";
-import { useQuery } from "@apollo/client/react";
+import { useMutation, useQuery } from "@apollo/client/react";
+import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
+import { useState } from "react";
+import React from "react";
 
 interface Task {
-  title: String;
-  description: String;
-  status: String;
-  priority: String;
+  _id: any
+  title: string;
+  description: string;
+  status: string;
+  priority: string;
 }
 
+
+
 const ListeTask = () => {
+  const [Id, setId] = useState('')
+  const [Status, setStatus] = useState('deja')
       const headerTask = [
         {
           name: ' Title'
@@ -27,7 +34,9 @@ const ListeTask = () => {
           name: 'Priority'
         }
      ];
- 
+
+
+  
     const { loading, data, error } = useQuery(GET_TASKS, {
     onCompleted: (data) =>{
     console.log('Data:',data);
@@ -36,6 +45,26 @@ const ListeTask = () => {
     },
     });
   
+  const [update, { }] = useMutation(UPDATE_TASK, {
+    variables: {
+      id: Id,
+      status: Status
+    }, onCompleted: () =>{
+      console.log('all is ok')
+    }, onError(error, clientOptions) {
+      console.log(error.message);
+      
+    },
+  })
+  
+  const taskDone = (id: any) => {
+    setId(id)
+    console.log(Id);
+    
+    update()
+    
+  }
+    
   if (loading) return <p>Loading...</p>;
   
     return (
@@ -45,11 +74,9 @@ const ListeTask = () => {
         <Thead>
             <Tr>
               <Th>
-                <Checkbox  size=''>
-                  <Text color={'gray.500'} variant=''>
+                 <Text color={'gray.500'} variant=''>
                     Task
                   </Text>
-                </Checkbox>
               </Th>
               {
                 headerTask.map((name) => (
@@ -71,19 +98,20 @@ const ListeTask = () => {
               data.getAllTasks.map((t: Task) => (
               <Tr>
               <Td>
-                <Checkbox size='sm'>
-                  Task
-                </Checkbox>
+                 <HStack spacing={0}>
+                    <Checkbox sx={{ h: "20px", borderColor: "none", px: "12px", _checked:{ bg:"gray.200", h:"40px", borderRadius:"30px" }, _hover: { bg:"gray", h:"40px", borderRadius:'30px'}}} onChange={() => taskDone(t._id)} size='sm'/>
+                    <Text variant=''>Task</Text>
+                 </HStack>
               </Td>
               <Td>
                  <Stack direction={{ base: "column", sm: "row", md:"row"}} spacing={3}>
-                   <Text color={'gray.900'} fontSize={'sm'} variant=''>{t.title}</Text>
+                   <Text color={'gray.700'} fontSize={'md'} variant=''>{t.title}</Text>
                    <Text color={'gray.400'} fontSize={'sm'} variant=''>{t.description}</Text>
                  </Stack>
               </Td>
               <Td>
                 <HStack display={{ base: "none", sm:"flex"}} spacing={1}>
-                  <Icon color={'gray.700'} boxSize={('15px')} as={t.status === 'Progress'? LuAlarmMinus : MdOutlineTaskAlt }/>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={t.status === 'todo'? LuAlarmMinus : MdOutlineTaskAlt }/>
                   <Text color={'gray.700'} fontSize={'sm'} variant=''>{t.status}</Text>
                 </HStack>
               </Td>
