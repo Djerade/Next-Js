@@ -12,8 +12,6 @@ import React from 'react';
 
 //Queries
 
-//Mutation
-
 
 //Components
 import ListeTask from '@/component/ListTask';

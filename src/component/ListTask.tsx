@@ -1,8 +1,8 @@
-import { Box, Text,Flex, HStack,IconButton, Icon, VStack,  List, ListItem, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Text,Flex, HStack,IconButton, Icon, VStack,  List, ListItem, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
 import { MdOutlineTaskAlt } from "react-icons/Md";
-import { AiOutlineArrowUp } from "react-icons/ai";
+import { AiOutlineArrowUp, AiOutlineDelete } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
-import { FiArrowRight, FiMoreHorizontal } from "react-icons/fi";
+import { FiArrowRight, FiEdit2, FiMoreHorizontal } from "react-icons/fi";
 import { LuAlarmMinus } from "react-icons/lu";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { FiCircle } from "react-icons/fi";
@@ -15,6 +15,7 @@ import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
 
 //Queries
 import { GET_TASKS } from "@/graphQl/Queries/getTask";
+import { PopoverArrow } from "@chakra-ui/react";
 interface Task {
   _id: any
   title: string;
@@ -62,6 +63,16 @@ const ListeTask = () => {
     },
   })
   
+  const editTask = () => {
+    console.log('edite');
+    
+  }
+
+  const deleteTask = () => {
+    console.log('delete');
+    
+  }
+
   const taskDone = (id: any, status: string) => {
     if (status ==='DONE') {
       setStatus('TODO')
@@ -108,7 +119,7 @@ const ListeTask = () => {
               <Tr>
               <Td>
                  <HStack spacing={0}>
-                    <Checkbox sx={{ h: "20px", borderColor: "none", px: "12px", _checked:{ bg:"gray.200", h:"40px", borderRadius:"30px" }, _hover: { bg:"gray", h:"40px", borderRadius:'30px'}}} onChange={() => taskDone(t._id, t.status)} size='sm'/>
+                    <Checkbox sx={{ h: "20px", borderColor: "none", px: "12px", _checked:{ bg:"gray.300", h:"40px", borderRadius:"30px" }, _hover: { bg:"gray.100", h:"40px", borderRadius:'30px'}}} onChange={() => taskDone(t._id, t.status)} size='sm'/>
                     <Text variant=''>Task</Text>
                  </HStack>
               </Td>
@@ -131,7 +142,22 @@ const ListeTask = () => {
                 </HStack>
               </Td>
               <Td display={{ base: "none", sm:"block"}}>
-                <IconButton _hover={{ bg: "white"}} bg={'white'} icon={<FiMoreHorizontal/>} aria-label={''} />
+                    <Flex justifyContent={'center'}>
+                      <Popover>
+                        <PopoverTrigger>
+                          <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<FiMoreHorizontal/>} aria-label={''} />
+                        </PopoverTrigger>
+                        <PopoverContent  w={'100%'}>
+                          <PopoverArrow />
+                          <PopoverBody>
+                            <Stack>
+                              <IconButton onClick={editTask} _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2 />} aria-label={''} />
+                              <IconButton onClick={deleteTask} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
+                            </Stack>
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    </Flex>
               </Td>
             </Tr>
               ))
