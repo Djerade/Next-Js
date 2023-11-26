@@ -11,7 +11,6 @@ import { useRef } from 'react';
 import React from 'react';
 
 //Queries
-import { GET_TASKS } from "../graphQl/Queries/getTask";
 
 //Mutation
 
@@ -37,7 +36,7 @@ const Home: NextPage<Props> = ({ }) => {
     title: "",
     description: "",
     priority: "",
-    status:"todo"
+    status:"TODO"
   });
   const [create, { data, loading, error }] = useMutation(CREATE_TASK, {
     variables:{
@@ -103,6 +102,7 @@ const Home: NextPage<Props> = ({ }) => {
               </FormControl>
               <FormControl isRequired mt={5}>
                 <Select value={value.priority} name='priority' onChange={handleChange} >
+                  <option value="..."></option>
                   <option value='High'>High</option>
                   <option value='Medium'>Medium</option>
                   <option value='Low'>Low</option>

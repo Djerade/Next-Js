@@ -4,12 +4,17 @@ import { AiOutlineArrowUp } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
 import { FiArrowRight, FiMoreHorizontal } from "react-icons/fi";
 import { LuAlarmMinus } from "react-icons/lu";
-import { GET_TASKS } from "@/graphQl/Queries/getTask";
 import { useMutation, useQuery } from "@apollo/client/react";
-import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
+import { FiCircle } from "react-icons/fi";
+import { FiArrowDown } from "react-icons/fi";
 import { useState } from "react";
 import React from "react";
 
+//Mutation
+import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
+
+//Queries
+import { GET_TASKS } from "@/graphQl/Queries/getTask";
 interface Task {
   _id: any
   title: string;
@@ -22,7 +27,7 @@ interface Task {
 
 const ListeTask = () => {
   const [Id, setId] = useState('')
-  const [Status, setStatus] = useState('deja')
+  const [Status, setStatus] = useState('')
       const headerTask = [
         {
           name: ' Title'
@@ -37,7 +42,8 @@ const ListeTask = () => {
 
 
   
-    const { loading, data, error } = useQuery(GET_TASKS, {
+  const { loading, data, error } = useQuery(GET_TASKS, {
+    pollInterval: 10,
     onCompleted: (data) =>{
     console.log('Data:',data);
     }, onError(error) {
@@ -49,20 +55,23 @@ const ListeTask = () => {
     variables: {
       id: Id,
       status: Status
-    }, onCompleted: () =>{
-      console.log('all is ok')
+    },
+    onCompleted: () => {
     }, onError(error, clientOptions) {
       console.log(error.message);
-      
     },
   })
   
-  const taskDone = (id: any) => {
-    setId(id)
-    console.log(Id);
-    
-    update()
-    
+  const taskDone = (id: any, status: string) => {
+    if (status ==='DONE') {
+      setStatus('TODO')
+      setId(id)
+      update()
+    } else {
+      setStatus('DONE')
+      setId(id)
+      update()
+    }    
   }
     
   if (loading) return <p>Loading...</p>;
@@ -99,7 +108,7 @@ const ListeTask = () => {
               <Tr>
               <Td>
                  <HStack spacing={0}>
-                    <Checkbox sx={{ h: "20px", borderColor: "none", px: "12px", _checked:{ bg:"gray.200", h:"40px", borderRadius:"30px" }, _hover: { bg:"gray", h:"40px", borderRadius:'30px'}}} onChange={() => taskDone(t._id)} size='sm'/>
+                    <Checkbox sx={{ h: "20px", borderColor: "none", px: "12px", _checked:{ bg:"gray.200", h:"40px", borderRadius:"30px" }, _hover: { bg:"gray", h:"40px", borderRadius:'30px'}}} onChange={() => taskDone(t._id, t.status)} size='sm'/>
                     <Text variant=''>Task</Text>
                  </HStack>
               </Td>
@@ -109,15 +118,15 @@ const ListeTask = () => {
                    <Text color={'gray.400'} fontSize={'sm'} variant=''>{t.description}</Text>
                  </Stack>
               </Td>
-              <Td>
+              <Td>    
                 <HStack display={{ base: "none", sm:"flex"}} spacing={1}>
-                  <Icon color={'gray.700'} boxSize={('15px')} as={t.status === 'todo'? LuAlarmMinus : MdOutlineTaskAlt }/>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={t.status === 'TODO'? FiCircle  : MdOutlineTaskAlt }/>
                   <Text color={'gray.700'} fontSize={'sm'} variant=''>{t.status}</Text>
                 </HStack>
               </Td>
               <Td>
                 <HStack display={{ base: "none", sm:"flex"}} spacing={1}>
-                  <Icon color={'gray.700'} boxSize={('15px')} as={t.priority === 'Medium'? FiArrowRight : AiOutlineArrowUp}/>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={t.priority === 'Medium'? FiArrowRight : t.priority ==='High'? AiOutlineArrowUp: FiArrowDown}/>
                   <Text color={'gray.700'} fontSize={'sm'} variant=''>{t.priority}</Text>
                 </HStack>
               </Td>
