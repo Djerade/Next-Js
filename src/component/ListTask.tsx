@@ -1,4 +1,4 @@
-import { Box, Text,Flex, HStack,IconButton, Icon, VStack,  List, ListItem, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
+import { Box, Text,Flex, HStack,IconButton, useDisclosure,Icon, VStack,  List, ListItem, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody, FormControl, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Textarea } from "@chakra-ui/react";
 import { MdOutlineTaskAlt } from "react-icons/Md";
 import { AiOutlineArrowUp, AiOutlineDelete } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
@@ -9,14 +9,18 @@ import { FiCircle } from "react-icons/fi";
 import { FiArrowDown } from "react-icons/fi";
 import { useState } from "react";
 import React from "react";
+import { useRef } from 'react';
 
 //Mutation
 import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
 
 //Queries
-import { GET_TASKS } from "@/graphQl/Queries/getTask";
+import { GET_TASKS } from "@/graphQl/Queries/getTasks";
 import { PopoverArrow } from "@chakra-ui/react";
 import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
+import { IoMdAdd } from "react-icons/io";
+import edite from "@/pages/edit/[id]";
+import router from "next/router";
 interface Task {
   _id: any
   title: string;
@@ -30,6 +34,10 @@ interface Task {
 const ListeTask = () => {
   const [Id, setId] = useState('')
   const [Status, setStatus] = useState('')
+  const { isOpen, onOpen, onClose } = useDisclosure() 
+  const initialRef = useRef(null)
+  const finalRef = useRef(null)  
+
       const headerTask = [
         {
           name: ' Title'
@@ -67,14 +75,12 @@ const ListeTask = () => {
   const [detete,{}] = useMutation(DELETE_TASK,{variables:{id:Id}})
 
   
-  const editTask = () => {
-   
-  }
+   const editTask = (id: any) => {    
+    router.push(`/edit/${id}`)
+   }
 
   const deleteTask = (id: any) => {
     setId(id)
-    console.log(id);
-    
     detete()
   }
 
@@ -89,6 +95,7 @@ const ListeTask = () => {
       update()
     }    
   }
+  
     
   if (loading) return <p>Loading...</p>;
   
@@ -156,8 +163,8 @@ const ListeTask = () => {
                           <PopoverArrow />
                           <PopoverBody>
                             <Stack>
-                              <IconButton onClick={editTask} _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2 />} aria-label={''} />
-                              <IconButton onClick={() =>deleteTask(t._id)} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
+                             <IconButton onClick={()=> editTask(t._id)}  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2 />} aria-label={''} />
+                             <IconButton onClick={()=> deleteTask(t._id)} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
                             </Stack>
                           </PopoverBody>
                         </PopoverContent>

@@ -10,11 +10,11 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useRef } from 'react';
 import React from 'react';
 
-//Queries
-
 
 //Components
 import ListeTask from '@/component/ListTask';
+
+//Mutation
 import { CREATE_TASK } from '@/graphQl/Mutation/createTask';
 
 interface Props { }
