@@ -1,7 +1,6 @@
-import { Button, Flex, useDisclosure,FormControl, IconButton, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Textarea, flexbox } from '@chakra-ui/react';
+import { Button, Flex, useDisclosure, Text,FormControl, IconButton, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Textarea, flexbox, Heading } from '@chakra-ui/react';
 import { NextPage } from 'next'
 import router, { useRouter } from 'next/router'
-import { IoMdAdd } from 'react-icons/io';
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { EDITE_TASK } from '@/graphQl/Mutation/editeTask';
@@ -14,16 +13,11 @@ interface Task{
   title: string;
   description: string;
   priority: string;
-  status: string;
 }
-const edite: NextPage<Props> = ({ }) => {
+const edite: NextPage<Props> =  ({ }) => {
   const router = useRouter();
   const [ID, setID] = useState("")
-  const [Title, setTitle] = useState("")
-  const [Description, setDescription] = useState("")
-  const [Priority, setPriority] = useState("")
-  
-  const {  data, error } = useQuery(GET_TASK, {
+   const {  data, error } = useQuery(GET_TASK, {
     variables: {
       id: router.query.id
     }, onCompleted: (data) => {
@@ -32,45 +26,68 @@ const edite: NextPage<Props> = ({ }) => {
     onError(error) {
       console.log('Error:', error.message);
     },
-  });
+   });
+  
 
+  
+  
+  const [newTitle, setTitle] = useState("")
+  const [newDescription, setDescription] = useState("")
+  const [newPriority, setPriority] = useState("")
+
+
+  const handleSubmit = () => {
+     edite()
+  }
+  
   const [edite, { loading, }] = useMutation(EDITE_TASK, {
-    variables:{
-      title: String(Title),
-      description: String(Description),
-      priority: String(Priority)
+    variables: {
+      id: router.query.id,
+      title: newTitle,
+      description: newDescription,
+      priority: newPriority
     }, onCompleted: (data) => {
-      console.log("Data:",data);
+      console.log("Data-edite:",data);
     }, onError(error) {
       console.log('Error:', error.message);
     },
   });
 
-  const handleSubmit = () => {
-    edite()
-  }
   return <Flex>
-    <Flex mt={10} w={'100%'} justify={"center"} >
-      <form onSubmit={handleSubmit}>
+    <Flex mt={10} w={'100%'} align={"center"} flexDirection={'column'} justify={"center"} >
+      <Heading  as='h3' size='lg' mb={1} >Edit task</Heading>
+       <form onSubmit={handleSubmit}>
       <FormControl isRequired>
-        <Input  name='title' value={Title}  type='text' onChange={(e)=>setTitle(e.target.value)}  placeholder='Title'/>
+          <Input name='newTitle'
+            value={newTitle}
+            type='text'
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder={data?.getTask?.title} />
       </FormControl>
       <FormControl isRequired mt={5}>
-        <Textarea onChange={(e)=>setDescription(e.target.value)} value={Description} name='description'   placeholder='Description'/>
+          <Textarea
+             onChange={(e) => setDescription(e.target.value)}
+             value={newDescription}
+            name='newDescription' placeholder={data?.getTask?.description}  />
       </FormControl>
       <FormControl isRequired mt={5}>
-        <Select  onChange={(e)=>setDescription(e.target.value)} value={Description}  name='priority'  >
-          <option value="..."></option>
+          <Select
+            onChange={(e) => setPriority(e.target.value)}
+            value={newPriority}
+            placeholder={data?.getTask?.priority} 
+            name='newPriority'  >
           <option value='High'>High</option>
           <option value='Medium'>Medium</option>
           <option value='Low'>Low</option>
         </Select>
       </FormControl>
       </form>
+      <Flex   mt={10} flexDirection={{ base: "column", sm:"row", md:"row"}}>
       <Button colorScheme="gray" mr={3} >
-              Cancel
+        Cancel
       </Button>
       <Button bg={'black'} onClick={() =>{ handleSubmit()}} color={"white"} >Save</Button>
+      </Flex>
     </Flex>
   </Flex>
 }
