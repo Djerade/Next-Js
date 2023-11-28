@@ -1,26 +1,24 @@
-import { Box, Text,Flex, HStack,IconButton, useDisclosure,Icon, VStack,  List, ListItem, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody, FormControl, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Textarea } from "@chakra-ui/react";
+import { Text, Flex, HStack,IconButton, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
 import { MdOutlineTaskAlt } from "react-icons/Md";
 import { AiOutlineArrowUp, AiOutlineDelete } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
 import { FiArrowRight, FiEdit2, FiMoreHorizontal } from "react-icons/fi";
-import { LuAlarmMinus } from "react-icons/lu";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { FiCircle } from "react-icons/fi";
 import { FiArrowDown } from "react-icons/fi";
 import { useState } from "react";
 import React from "react";
-import { useRef } from 'react';
+import router from "next/router";
+import { PopoverArrow } from "@chakra-ui/react";
+
 
 //Mutation
 import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
+import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
 
 //Queries
 import { GET_TASKS } from "@/graphQl/Queries/getTasks";
-import { PopoverArrow } from "@chakra-ui/react";
-import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
-import { IoMdAdd } from "react-icons/io";
-import edite from "@/pages/edit/[id]";
-import router from "next/router";
+
 interface Task {
   _id: any
   title: string;
@@ -34,10 +32,6 @@ interface Task {
 const ListeTask = () => {
   const [Id, setId] = useState('')
   const [Status, setStatus] = useState('')
-  const { isOpen, onOpen, onClose } = useDisclosure() 
-  const initialRef = useRef(null)
-  const finalRef = useRef(null)  
-
       const headerTask = [
         {
           name: ' Title'
@@ -48,42 +42,30 @@ const ListeTask = () => {
         {
           name: 'Priority'
         }
-     ];
-
-
-  
-  const { loading, data, error } = useQuery(GET_TASKS, {
+     ];  
+  const { loading, data } = useQuery(GET_TASKS, {
     pollInterval: 10,
-    onCompleted: (data) =>{
-    console.log('Data:',data);
-    }, onError(error) {
+    onError(error) {
       console.log('Error:', error.message);
     },
     });
-  
   const [update, { }] = useMutation(UPDATE_TASK, {
     variables: {
       id: Id,
       status: Status
     },
-    onCompleted: () => {
-    }, onError(error, clientOptions) {
+    onError(error) {
       console.log(error.message);
     },
   })
-
-  const [detete,{}] = useMutation(DELETE_TASK,{variables:{id:Id}})
-
-  
+  const [detete,{}] = useMutation(DELETE_TASK,{variables:{id:Id}})  
    const editTask = (id: any) => {    
     router.push(`/edit/${id}`)
    }
-
   const deleteTask = (id: any) => {
     setId(id)
     detete()
   }
-
   const taskDone = (id: any, status: string) => {
     if (status ==='DONE') {
       setStatus('TODO')
@@ -94,9 +76,7 @@ const ListeTask = () => {
       setId(id)
       update()
     }    
-  }
-  
-    
+  } 
   if (loading) return <p>Loading...</p>;
   
     return (
@@ -153,7 +133,7 @@ const ListeTask = () => {
                   <Text color={'gray.700'} fontSize={'sm'} variant=''>{t.priority}</Text>
                 </HStack>
               </Td>
-              <Td display={{ base: "none", sm:"block"}}>
+              <Td>
                     <Flex justifyContent={'center'}>
                       <Popover>
                         <PopoverTrigger>

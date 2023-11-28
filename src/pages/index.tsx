@@ -42,9 +42,9 @@ const Home: NextPage<Props> = ({ }) => {
       description: value.description,
       status: value.status,
       priority: value.priority
-    }, onCompleted: (data) => {
-      console.log("Data:",data);
-    }
+    },onError(error) {
+      console.log(error.message);
+    },
   });
   const handleChange = (event: any) => {
     setvalue({
