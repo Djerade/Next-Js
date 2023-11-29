@@ -32,7 +32,11 @@ interface Task {
 
 const ListeTask = () => {
   const [Id, setId] = useState('')
-   const { isOpen, onOpen, onClose } = useDisclosure() 
+const [editeID, setediteID] = useState<string>()
+  const [editeTITLE, setediteTITLE] = useState<string>()
+  const [editeDESCRIPTION, setediteDESCRIPTION] = useState<string>()
+  const [editePRIORITY, seteditePRIORITY] = useState<string>()
+  const { isOpen, onOpen, onClose } = useDisclosure() 
   const [Status, setStatus] = useState('')
       const headerTask = [
         {
@@ -61,8 +65,11 @@ const ListeTask = () => {
     },
   })
   const [detete,{}] = useMutation(DELETE_TASK,{variables:{id:Id}})  
-   const editTask = (id: any) => {    
-    router.push(`/edit/${id}`)
+  const editTask = (id: string, title: string, description: string, priority: string) => {  
+    setediteID(id)
+    setediteTITLE(title)
+    setediteDESCRIPTION(description),
+    seteditePRIORITY(priority)
    }
   const deleteTask = (id: any) => {
     setId(id)
@@ -136,25 +143,25 @@ const ListeTask = () => {
                 </HStack>
               </Td>
               <Td>
-                    <Flex justifyContent={'center'}>
-                      <Popover>
-                        <PopoverTrigger>
-                          <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<FiMoreHorizontal/>} aria-label={''} />
-                        </PopoverTrigger>
-                        <PopoverContent  w={'100%'}>
-                          <PopoverArrow />
-                          <PopoverBody>
-                            <Stack>
-                              <Flex>
-                                <IconButton onClick={onOpen} _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2 />} aria-label={''} />
-                                <FormTask nameHeader={'Edite '} nameButton={'save'} title={'title'} description={'desc'} priority={"prio"}  isOpen={isOpen} onClose={onClose} />
-                              </Flex>
-                             <IconButton onClick={()=> deleteTask(t._id)} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
-                            </Stack>
-                          </PopoverBody>
-                        </PopoverContent>
-                      </Popover>
-                    </Flex>
+                <Flex justifyContent={'center'}>
+                  <Popover>
+                    <PopoverTrigger>
+                      <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<FiMoreHorizontal/>} aria-label={''} />
+                    </PopoverTrigger>
+                    <PopoverContent  w={'100%'}>
+                      <PopoverArrow />
+                      <PopoverBody>
+                        <Stack>
+                          <Flex>
+                            <IconButton onClick={() => { onOpen(), editTask(t._id, t.title, t.description, t.priority ) }} _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
+                            <FormTask nameHeader={'Edite '} nameButton={'save'} id={String(editeID)} title={String(editeTITLE)} description={String(editeDESCRIPTION)} priority={String(editePRIORITY)}  isOpen={isOpen} onClose={onClose} />
+                          </Flex>
+                         <IconButton onClick={()=> deleteTask(t._id)} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
+                        </Stack>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                </Flex>
               </Td>
             </Tr>
               ))

@@ -1,24 +1,47 @@
 "use client"
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/modal"
-import { useDisclosure, FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
-import { useRef } from "react"
-
+import { FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
+import { useRef, useState } from "react"
+import { useRouter } from 'next/router'
+import { EDITE_TASK } from "@/graphQl/Mutation/editeTask"
+import { useMutation } from "@apollo/client"
 
 
 const FormTask = (props: {
   nameHeader: String;
   nameButton: String;
-  title: String;
-  description: String;
-  priority: String;
+  id: string;
+  title: string;
+  description: string;
+  priority: string;
   isOpen: boolean;
   onClose: () => void;
 }) => {
-    const initialRef = useRef(null)
+  const initialRef = useRef(null)
   const finalRef = useRef(null)
-  const { nameHeader, nameButton, title, description, priority, isOpen, onClose } = props;
-  console.log('--open:', isOpen);
-   console.log('--close:', onClose);
+  const router = useRouter();
+  const { nameHeader, nameButton, title, id, description, priority, isOpen, onClose } = props;
+  const [newTitle, setTitle] = useState(title)
+  const [newDescription, setDescription] = useState(description)
+  const [newPriority, setPriority] = useState(priority)
+  const handleSubmit = () => {
+    edite();
+    setTitle("");
+    setDescription("");
+    setPriority("");
+  }
+  const [edite] = useMutation(EDITE_TASK, {
+    variables: {
+      id: id,
+      title: newTitle,
+      description: newDescription,
+      priority: newPriority
+    }, onError(error) {
+      console.log('Error:', error.message);
+    },
+  });
+
+    
     return ( <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -28,28 +51,38 @@ const FormTask = (props: {
         <ModalContent> 
             <ModalHeader >{ nameHeader}</ModalHeader>
           <ModalBody>
-            <form >
-              <FormControl isRequired>
-                <Input  name='title' type='text'  placeholder='Title'/>
-              </FormControl>
-              <FormControl isRequired mt={5}>
-                <Textarea  name='description'   placeholder='Description'/>
-              </FormControl>
-              <FormControl isRequired mt={5}>
-                <Select  placeholder={'Priority'} name='priority'  >
-                  <option value="..."></option>
-                  <option value='High'>High</option>
-                  <option value='Medium'>Medium</option>
-                  <option value='Low'>Low</option>
-                </Select>
-              </FormControl>
+            <form onSubmit={handleSubmit}>
+                <FormControl isRequired>
+                    <Input name='newTitle'
+                      value={newTitle}
+                      type='text'
+                      onChange={(e) => setTitle(e.target.value)}
+                     />
+                </FormControl>
+                <FormControl isRequired mt={5}>
+                    <Textarea
+                       onChange={(e) => setDescription(e.target.value)}
+                       value={newDescription}
+                      name='newDescription'
+                      />
+                </FormControl>
+                <FormControl isRequired mt={5}>
+                    <Select
+                      onChange={(e) => setPriority(e.target.value)}
+                      value={newPriority}
+                      name='newPriority'  >
+                    <option value='High'>High</option>
+                    <option value='Medium'>Medium</option>
+                    <option value='Low'>Low</option>
+                  </Select>
+                </FormControl>
             </form>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="gray" mr={3} onClick={onClose}>
               Cancel
             </Button>
-                <Button bg={'black'} onClick={() =>{ onClose()}} color={"white"} >{ nameButton }</Button>
+                <Button bg={'black'} onClick={() =>{ handleSubmit() ,onClose()}} color={"white"} >{ nameButton }</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>)
