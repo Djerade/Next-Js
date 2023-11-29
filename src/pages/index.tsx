@@ -99,7 +99,7 @@ const Home: NextPage<Props> = ({ }) => {
                 <Textarea value={value.description} name='description'  onChange={handleChange} placeholder='Description'/>
               </FormControl>
               <FormControl isRequired mt={5}>
-                <Select value={value.priority} name='priority' onChange={handleChange} >
+                <Select value={value.priority} placeholder={'Priority'} name='priority' onChange={handleChange} >
                   <option value="..."></option>
                   <option value='High'>High</option>
                   <option value='Medium'>Medium</option>

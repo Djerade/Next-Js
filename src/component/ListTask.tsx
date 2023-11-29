@@ -1,4 +1,4 @@
-import { Text, Flex, HStack,IconButton, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
+import { Text, Flex, useDisclosure, HStack,IconButton, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
 import { MdOutlineTaskAlt } from "react-icons/Md";
 import { AiOutlineArrowUp, AiOutlineDelete } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
@@ -18,6 +18,7 @@ import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
 
 //Queries
 import { GET_TASKS } from "@/graphQl/Queries/getTasks";
+import FormTask from "./editeForm";
 
 interface Task {
   _id: any
@@ -31,6 +32,7 @@ interface Task {
 
 const ListeTask = () => {
   const [Id, setId] = useState('')
+   const { isOpen, onOpen, onClose } = useDisclosure() 
   const [Status, setStatus] = useState('')
       const headerTask = [
         {
@@ -143,7 +145,10 @@ const ListeTask = () => {
                           <PopoverArrow />
                           <PopoverBody>
                             <Stack>
-                             <IconButton onClick={()=> editTask(t._id)}  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2 />} aria-label={''} />
+                              <Flex>
+                                <IconButton onClick={onOpen} _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2 />} aria-label={''} />
+                                <FormTask nameHeader={'Edite '} nameButton={'save'} title={'title'} description={'desc'} priority={"prio"}  isOpen={isOpen} onClose={onClose} />
+                              </Flex>
                              <IconButton onClick={()=> deleteTask(t._id)} _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
                             </Stack>
                           </PopoverBody>

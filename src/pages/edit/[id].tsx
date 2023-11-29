@@ -19,9 +19,9 @@ const edite: NextPage<Props> =  ({ }) => {
       console.log('Error:', error.message);
     },
    });
-  const [newTitle, setTitle] = useState("")
-  const [newDescription, setDescription] = useState("")
-  const [newPriority, setPriority] = useState("")
+  const [newTitle, setTitle] = useState(data?.getTask?.title)
+  const [newDescription, setDescription] = useState(data?.getTask?.description)
+  const [newPriority, setPriority] = useState(data?.getTask?.priority)
   const home = () => {    
     router.push(`/`)
    }
@@ -47,20 +47,19 @@ const edite: NextPage<Props> =  ({ }) => {
             value={newTitle}
             type='text'
             onChange={(e) => setTitle(e.target.value)}
-            placeholder={data?.getTask?.title} />
+           />
       </FormControl>
       <FormControl isRequired mt={5}>
           <Textarea
              onChange={(e) => setDescription(e.target.value)}
              value={newDescription}
             name='newDescription'
-            placeholder={data?.getTask?.description} />
+            />
       </FormControl>
       <FormControl isRequired mt={5}>
           <Select
             onChange={(e) => setPriority(e.target.value)}
             value={newPriority}
-            placeholder={data?.getTask?.priority} 
             name='newPriority'  >
           <option value='High'>High</option>
           <option value='Medium'>Medium</option>
