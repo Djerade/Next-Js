@@ -1,3 +1,4 @@
+"use client"
 import { NextPage } from 'next'
 import { Text, Box, Flex, Select, Input, Button, Heading, HStack, IconButton, Modal, useDisclosure, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 import theme from "@/styles/theme";
