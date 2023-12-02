@@ -8,7 +8,6 @@ import { FiCircle } from "react-icons/fi";
 import { FiArrowDown } from "react-icons/fi";
 import { useState } from "react";
 import React from "react";
-import router from "next/router";
 import { PopoverArrow } from "@chakra-ui/react";
 
 
@@ -19,6 +18,7 @@ import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
 //Queries
 import { GET_TASKS } from "@/graphQl/Queries/getTasks";
 import FormTask from "./editeForm";
+import { DELETE_TASKS } from "@/graphQl/Mutation/deleteTasks";
 
 interface Task {
   _id: any
@@ -32,7 +32,10 @@ interface Task {
 
 const ListeTask = () => {
   const [Id, setId] = useState('')
-const [editeID, setediteID] = useState<string>()
+  const [allCheck, setallCheck] = useState(false)
+  const [checkTask, setcheckTask] = useState(false)
+  const [nbreTaskChecked, setnbreTaskChecked] = useState<number>(0)
+  const [editeID, setediteID] = useState<string>()
   const [editeTITLE, setediteTITLE] = useState<string>()
   const [editeDESCRIPTION, setediteDESCRIPTION] = useState<string>()
   const [editePRIORITY, seteditePRIORITY] = useState<string>()
@@ -54,7 +57,11 @@ const [editeID, setediteID] = useState<string>()
     onError(error) {
       console.log('Error:', error.message);
     },
-    });
+  });
+
+  data?.getAllTasks.map((t: Task) => t.status == 'DONE' && setnbreTaskChecked(nbreTaskChecked + 1))
+  console.log('task done', nbreTaskChecked);
+  
   const [update, { }] = useMutation(UPDATE_TASK, {
     variables: {
       id: Id,
@@ -64,13 +71,14 @@ const [editeID, setediteID] = useState<string>()
       console.log(error.message);
     },
   })
-  const [detete,{}] = useMutation(DELETE_TASK,{variables:{id:Id}})  
+  const [detete, { }] = useMutation(DELETE_TASK, { variables: { id: Id } })  
+  const [deleteTasks, {}] = useMutation(DELETE_TASKS)
   const editTask = (id: string, title: string, description: string, priority: string) => {  
     setediteID(id)
     setediteTITLE(title)
     setediteDESCRIPTION(description),
     seteditePRIORITY(priority)
-   }
+  }  
   const deleteTask = (id: any) => {
     setId(id)
     detete()
@@ -86,6 +94,12 @@ const [editeID, setediteID] = useState<string>()
       update()
     }    
   } 
+
+  function allCheckTask() {
+    allCheck ? setallCheck(false) : setallCheck(true)
+    deleteTasks()
+  }
+
   if (loading) return <p>Loading...</p>;
   
     return (
@@ -94,10 +108,13 @@ const [editeID, setediteID] = useState<string>()
       <Table>
         <Thead>
             <Tr>
-              <Th>
-                 <Text color={'gray.500'} variant=''>
-                    Task
-                  </Text>
+                <Th>
+                  <Flex  width={"100%"} color={'red'} flexDirection={'row'}>
+                    <Checkbox onChange={allCheckTask} sx={{ h: "20px", borderColor: "none", px: "6px", _checked: { bg: "gray.300",w: "20px", h: "20px", borderRadius: "30px" },  }}  size='sm' />
+                    <Text color={'gray.500'} variant=''>
+                      Task
+                    </Text>
+                  </Flex>
               </Th>
               {
                 headerTask.map((name) => (
@@ -120,7 +137,12 @@ const [editeID, setediteID] = useState<string>()
               <Tr>
               <Td>
                  <HStack spacing={0}>
-                    <Checkbox sx={{ h: "20px", borderColor: "none", px: "12px", _checked:{ bg:"gray.300", h:"40px", borderRadius:"30px" }, _hover: { bg:"gray.100", h:"40px", borderRadius:'30px'}}} onChange={() => taskDone(t._id, t.status)} size='sm'/>
+                      <Checkbox
+                        sx={{
+                          h: "20px", borderColor: "none", px: "12px", _checked: { bg: "gray.300", h: "40px", borderRadius: "30px" },
+                         _hover: { bg: "gray.100", h: "40px", borderRadius: '30px' }
+                        }}
+                        onChange={() => {taskDone(t._id, t.status), setnbreTaskChecked(nbreTaskChecked+1)}} size='sm' />
                     <Text variant=''>Task</Text>
                  </HStack>
               </Td>

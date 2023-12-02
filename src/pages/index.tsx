@@ -101,7 +101,6 @@ const Home: NextPage<Props> = ({ }) => {
               </FormControl>
               <FormControl isRequired mt={5}>
                 <Select value={value.priority} placeholder={'Priority'} name='priority' onChange={handleChange} >
-                  <option value="..."></option>
                   <option value='High'>High</option>
                   <option value='Medium'>Medium</option>
                   <option value='Low'>Low</option>
