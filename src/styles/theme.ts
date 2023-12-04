@@ -1,5 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
-import { createBreakpoints, Styles } from "@chakra-ui/theme-tools";
+import { createBreakpoints } from "@chakra-ui/theme-tools";
 
 
 const colors = {

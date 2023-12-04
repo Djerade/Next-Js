@@ -34,7 +34,7 @@ const ListeTask = () => {
   const [Id, setId] = useState('')
   const [allCheck, setallCheck] = useState(false)
   const [checkTask, setcheckTask] = useState(false)
-  const [nbreTaskChecked, setnbreTaskChecked] = useState<number>(0)
+  const [listTaskChecked, setlistTaskChecked] = useState<string[]>([])
   const [editeID, setediteID] = useState<string>()
   const [editeTITLE, setediteTITLE] = useState<string>()
   const [editeDESCRIPTION, setediteDESCRIPTION] = useState<string>()
@@ -59,8 +59,8 @@ const ListeTask = () => {
     },
   });
 
-  data?.getAllTasks.map((t: Task) => t.status == 'DONE' && setnbreTaskChecked(nbreTaskChecked + 1))
-  console.log('task done', nbreTaskChecked);
+  // data?.getAllTasks.map((t: Task) => t.status == 'DONE' && setnbreTaskChecked(nbreTaskChecked + 1))
+  // console.log('check', listTaskChecked);
   
   const [update, { }] = useMutation(UPDATE_TASK, {
     variables: {
@@ -95,22 +95,25 @@ const ListeTask = () => {
     }    
   } 
 
-  function allCheckTask() {
-    allCheck ? setallCheck(false) : setallCheck(true)
-    deleteTasks()
+  function MultipleDeleteTask() {
+    for (let i = 0; i <= listTaskChecked.length; i++){
+    // deleteTasks()
+      console.log(listTaskChecked[i]);
+      
+    }
   }
 
   if (loading) return <p>Loading...</p>;
   
     return (
-    <Flex mt={4} borderRadius={8} width={'100%'} borderWidth={'1px'}>
+    <Flex mt={4} flexDirection={'column'} borderRadius={8} width={'100%'} borderWidth={'1px'}>
       <TableContainer width={'100%'}>
       <Table>
         <Thead>
             <Tr>
                 <Th>
                   <Flex  width={"100%"} color={'red'} flexDirection={'row'}>
-                    <Checkbox onChange={allCheckTask} sx={{ h: "20px", borderColor: "none", px: "6px", _checked: { bg: "gray.300",w: "20px", h: "20px", borderRadius: "30px" },  }}  size='sm' />
+                    {/* <Checkbox onChange={allCheckTask} sx={{ h: "20px", borderColor: "none", px: "6px", _checked: { bg: "gray.300",w: "20px", h: "20px", borderRadius: "30px" },  }}  size='sm' /> */}
                     <Text color={'gray.500'} variant=''>
                       Task
                     </Text>
@@ -142,7 +145,7 @@ const ListeTask = () => {
                           h: "20px", borderColor: "none", px: "12px", _checked: { bg: "gray.300", h: "40px", borderRadius: "30px" },
                          _hover: { bg: "gray.100", h: "40px", borderRadius: '30px' }
                         }}
-                        onChange={() => {taskDone(t._id, t.status), setnbreTaskChecked(nbreTaskChecked+1)}} size='sm' />
+                        onChange={() => { taskDone(t._id, t.status), setlistTaskChecked([...listTaskChecked, t._id])}} size='sm' />
                     <Text variant=''>Task</Text>
                  </HStack>
               </Td>
@@ -190,7 +193,8 @@ const ListeTask = () => {
             }
           </Tbody>
       </Table>
-      </TableContainer>
+        </TableContainer>
+        { listTaskChecked.length > 1 && <IconButton ml={8} bg={'red'} w={'24px'} aria-label='' onClick={MultipleDeleteTask}  icon={<AiOutlineDelete />}/>}
     </Flex>
     )
 }
