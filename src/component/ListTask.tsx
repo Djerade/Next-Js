@@ -58,7 +58,6 @@ const ListeTask = () => {
       console.log('Error:', error.message);
     },
   });
-
   // data?.getAllTasks.map((t: Task) => t.status == 'DONE' && setnbreTaskChecked(nbreTaskChecked + 1))
   // console.log('check', listTaskChecked);
   
@@ -94,13 +93,24 @@ const ListeTask = () => {
       update()
     }    
   } 
+  console.log(listTaskChecked);
+  
 
-  function MultipleDeleteTask() {
+  async function MultipleDeleteTask() {
     for (let i = 0; i <= listTaskChecked.length; i++){
-    // deleteTasks()
-      console.log(listTaskChecked[i]);
-      
+      // deleteTasks()
+      var id: string;
+      console.log(i);
+      id = listTaskChecked[i];
+      if (id != undefined ) {
+        setId(id)
+        await detete()
+      }
     }
+  }
+
+  function handleChande(id: string) {
+    listTaskChecked.includes(id) ? setlistTaskChecked([...listTaskChecked.filter(Id => Id !== id)]) :  setlistTaskChecked([...listTaskChecked, id]);
   }
 
   if (loading) return <p>Loading...</p>;
@@ -145,7 +155,7 @@ const ListeTask = () => {
                           h: "20px", borderColor: "none", px: "12px", _checked: { bg: "gray.300", h: "40px", borderRadius: "30px" },
                          _hover: { bg: "gray.100", h: "40px", borderRadius: '30px' }
                         }}
-                        onChange={() => { taskDone(t._id, t.status), setlistTaskChecked([...listTaskChecked, t._id])}} size='sm' />
+                        onChange={() => { taskDone(t._id, t.status),handleChande(t._id)}} size='sm' />
                     <Text variant=''>Task</Text>
                  </HStack>
               </Td>
