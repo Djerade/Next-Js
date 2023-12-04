@@ -71,7 +71,6 @@ const ListeTask = () => {
     },
   })
   const [detete, { }] = useMutation(DELETE_TASK, { variables: { id: Id } })  
-  const [deleteTasks, {}] = useMutation(DELETE_TASKS)
   const editTask = (id: string, title: string, description: string, priority: string) => {  
     setediteID(id)
     setediteTITLE(title)
@@ -98,15 +97,14 @@ const ListeTask = () => {
 
   async function MultipleDeleteTask() {
     for (let i = 0; i <= listTaskChecked.length; i++){
-      // deleteTasks()
       var id: string;
-      console.log(i);
       id = listTaskChecked[i];
       if (id != undefined ) {
         setId(id)
         await detete()
       }
     }
+    listTaskChecked.length = 0;
   }
 
   function handleChande(id: string) {
