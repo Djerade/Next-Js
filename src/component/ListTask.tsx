@@ -1,4 +1,4 @@
-import { Text, Flex, useDisclosure, HStack,IconButton, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
+import { Text, Flex, useDisclosure, HStack,IconButton, Center, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
 import { MdOutlineTaskAlt } from "react-icons/Md";
 import { AiOutlineArrowUp, AiOutlineDelete } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
@@ -9,7 +9,6 @@ import { FiArrowDown } from "react-icons/fi";
 import { useState } from "react";
 import React from "react";
 import { PopoverArrow } from "@chakra-ui/react";
-
 
 //Mutation
 import { UPDATE_TASK } from "@/graphQl/Mutation/doneTask";
@@ -27,8 +26,6 @@ interface Task {
   status: string;
   priority: string;
 }
-
-
 
 const ListeTask = () => {
   const [Id, setId] = useState('')
@@ -58,9 +55,6 @@ const ListeTask = () => {
       console.log('Error:', error.message);
     },
   });
-  // data?.getAllTasks.map((t: Task) => t.status == 'DONE' && setnbreTaskChecked(nbreTaskChecked + 1))
-  // console.log('check', listTaskChecked);
-  
   const [update, { }] = useMutation(UPDATE_TASK, {
     variables: {
       id: Id,
@@ -92,9 +86,6 @@ const ListeTask = () => {
       update()
     }    
   } 
-  console.log(listTaskChecked);
-  
-
   async function MultipleDeleteTask() {
     for (let i = 0; i <= listTaskChecked.length; i++){
       var id: string;
@@ -111,7 +102,7 @@ const ListeTask = () => {
     listTaskChecked.includes(id) ? setlistTaskChecked([...listTaskChecked.filter(Id => Id !== id)]) :  setlistTaskChecked([...listTaskChecked, id]);
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Center>Loading...</Center>;
   
     return (
     <Flex mt={4} flexDirection={'column'} borderRadius={8} width={'100%'} borderWidth={'1px'}>

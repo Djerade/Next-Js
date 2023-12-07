@@ -1,7 +1,7 @@
 "use client"
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/modal"
 import { FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from 'next/router'
 import { EDITE_TASK } from "@/graphQl/Mutation/editeTask"
 import { useMutation } from "@apollo/client"
@@ -24,6 +24,11 @@ const FormTask = (props: {
   const [newTitle, setTitle] = useState(title)
   const [newDescription, setDescription] = useState(description)
   const [newPriority, setPriority] = useState(priority)
+  useEffect(() => {
+    setTitle(title)
+    setDescription(description)
+    setPriority(priority)
+  }, [title, description, priority])
   const handleSubmit = () => {
     edite();
     setTitle("");
