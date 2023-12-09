@@ -1,4 +1,4 @@
-import { Text, Flex, useDisclosure, HStack,IconButton, Center, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
+import { Text, Flex, useDisclosure, HStack,IconButton, Center, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody, flexbox, VStack, Input } from "@chakra-ui/react";
 import { MdOutlineTaskAlt } from "react-icons/Md";
 import { AiOutlineArrowUp, AiOutlineDelete } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
@@ -6,7 +6,7 @@ import { FiArrowRight, FiEdit2, FiMoreHorizontal } from "react-icons/fi";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { FiCircle } from "react-icons/fi";
 import { FiArrowDown } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import { PopoverArrow } from "@chakra-ui/react";
 
@@ -17,7 +17,8 @@ import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
 //Queries
 import { GET_TASKS } from "@/graphQl/Queries/getTasks";
 import FormTask from "./editeForm";
-import { DELETE_TASKS } from "@/graphQl/Mutation/deleteTasks";
+import { RiEqualizerLine } from "react-icons/ri";
+import { FiPlusCircle } from 'react-icons/fi';
 
 interface Task {
   _id: any
@@ -30,6 +31,9 @@ interface Task {
 const ListeTask = () => {
   const [Id, setId] = useState('')
   const [allCheck, setallCheck] = useState(false)
+  const [search, setsearch] = useState<string>('')
+  const [taskList, settaskList] = useState<Task>()
+  const [TaskFound, setTaskFound] = useState()
   const [checkTask, setcheckTask] = useState(false)
   const [listTaskChecked, setlistTaskChecked] = useState<string[]>([])
   const [editeID, setediteID] = useState<string>()
@@ -64,6 +68,10 @@ const ListeTask = () => {
       console.log(error.message);
     },
   })
+
+  useEffect(() => {
+    settaskList(data)
+  }, [data]);
   const [detete, { }] = useMutation(DELETE_TASK, { variables: { id: Id } })  
   const editTask = (id: string, title: string, description: string, priority: string) => {  
     setediteID(id)
@@ -71,6 +79,10 @@ const ListeTask = () => {
     setediteDESCRIPTION(description),
     seteditePRIORITY(priority)
   }  
+  const datas: Task[] = data;
+
+  // console.log('data found',data.getAllTasks.filter((task: Task) => task.title.includes("ti")));
+  
   const deleteTask = (id: any) => {
     setId(id)
     detete()
@@ -98,14 +110,30 @@ const ListeTask = () => {
     listTaskChecked.length = 0;
   }
 
-  function handleChande(id: string) {
+  function handleCheck(id: string) {
     listTaskChecked.includes(id) ? setlistTaskChecked([...listTaskChecked.filter(Id => Id !== id)]) :  setlistTaskChecked([...listTaskChecked, id]);
   }
 
   if (loading) return <Center>Loading...</Center>;
   
-    return (
-    <Flex mt={4} flexDirection={'column'} borderRadius={8} width={'100%'} borderWidth={'1px'}>
+  return (
+    <>
+      <Flex justify={{ base:"center", sm:'center',  md:"space-between", lg:"space-between"}} >
+        <HStack  spacing={5}>
+          <Input onChange={(t) => setsearch(t.target.value)}  fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} placeholder='Filter tasks...'  size={{ base:"md", md:'md', lg:"lg" }} w={{ base: "xs", sm: "sm", md: "md", lg: "lg" }} />
+          <Button display={{base: "none", sm:"block"}} fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} fontWeight={'normal'} color={'gray.700'}  borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
+              Status
+          </Button>
+          <Button  display={{base: "none", sm:"block"}} fontSize={14} h={{ base: 6, sm: 7, md: 8, lg: 9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
+              Priority
+          </Button>
+        </HStack>
+        <Button fontSize={14} display={{base: "none", sm:"block"}} h={{ base: 6, sm: 7, md: 8, lg: 9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<RiEqualizerLine /> }>
+           View
+        </Button>
+      </Flex>
+      <MobileList  listTask={data?.getAllTasks} />
+      <Flex display={{ base: 'none', sm: "none", md: 'block', lg: "block" }} mt={4} flexDirection={'column'} borderRadius={8} width={'100%'} borderWidth={'1px'}>
       <TableContainer width={'100%'}>
       <Table>
         <Thead>
@@ -135,7 +163,11 @@ const ListeTask = () => {
           </Thead>
            <Tbody>
             {
-              data.getAllTasks.map((t: Task) => (
+                data?.getAllTasks.filter((task: Task) => {
+                  return search.toLowerCase() === ''
+                    ? task
+                    : task.title.toLowerCase().includes(search)
+                }).map((t: Task) => (
               <Tr>
               <Td>
                  <HStack spacing={0}>
@@ -144,7 +176,7 @@ const ListeTask = () => {
                           h: "20px", borderColor: "none", px: "12px", _checked: { bg: "gray.300", h: "40px", borderRadius: "30px" },
                          _hover: { bg: "gray.100", h: "40px", borderRadius: '30px' }
                         }}
-                        onChange={() => { taskDone(t._id, t.status),handleChande(t._id)}} size='sm' />
+                        onChange={() => { taskDone(t._id, t.status),handleCheck(t._id)}} size='sm' />
                     <Text variant=''>Task</Text>
                  </HStack>
               </Td>
@@ -195,6 +227,47 @@ const ListeTask = () => {
         </TableContainer>
         { listTaskChecked.length > 1 && <IconButton ml={8} bg={'red'} w={'24px'} aria-label='' onClick={MultipleDeleteTask}  icon={<AiOutlineDelete />}/>}
     </Flex>
+    </>
     )
+}
+
+const MobileList = (props: { listTask:  Task}) => {
+  const { listTask } = props;
+  console.log(listTask);
+  
+  return [
+    <Flex mt={5} borderRadius={10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
+      <HStack mb={5} justify={'end'}  spacing={3}>
+         <IconButton  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
+         <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
+      </HStack>
+     
+      <Flex borderRadius={5} pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
+        <Text color={'gray.500'}>
+            Title
+        </Text>
+        <Text fontWeight={'normal'}>
+          Faire la lessive
+        </Text>
+      </Flex>
+      <Flex p={1} borderRadius={5} pl={3} pr={3}  bg={'gray.200'} mb={3} justify={'space-between'} flexDirection={'row'}>
+        <Text color={'gray.500'}>
+            Status
+        </Text>
+        <Text fontWeight={'normal'}>
+          Faire la lessive
+        </Text>
+      </Flex>
+      <Flex borderRadius={5}  pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
+        <Text color={'gray.500'}>
+            Status
+        </Text>
+        <Text fontWeight={'normal'}>
+          Faire la lessive
+        </Text>
+      </Flex>
+     
+    </Flex>
+  ]
 }
 export default ListeTask;

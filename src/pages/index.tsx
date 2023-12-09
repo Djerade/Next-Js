@@ -4,8 +4,6 @@ import { Text, Box, Flex, Select, Input, Button, Heading, HStack, IconButton, Mo
 import theme from "@/styles/theme";
 import logo from 'public/assets/03.png';
 import Image from 'next/image';
-import { RiEqualizerLine } from "react-icons/ri";
-import { FiPlusCircle } from 'react-icons/fi';
 import { IoMdAdd } from "react-icons/io";
 import { useMutation, useQuery } from '@apollo/client';
 import { useRef } from 'react';
@@ -65,20 +63,6 @@ const Home: NextPage<Props> = ({ }) => {
     <Box mr={5} w={{ base:"35px", sm:"35px", md:"35px", lg:"40px"}}>
       <Image  src={logo}  alt={'image'}/>
     </Box>
-    </Flex>
-    <Flex justify={{ base:"center", sm:'center',  md:"space-between", lg:"space-between"}} >
-      <HStack  spacing={5}>
-        <Input  fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} placeholder='Filter tasks...'  size={{ base:"md", md:'md', lg:"lg" }} w={{ base: "xs", sm: "sm", md: "md", lg: "lg" }} />
-        <Button display={{base: "none", sm:"block"}} fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} fontWeight={'normal'} color={'gray.700'}  borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
-            Status
-        </Button>
-        <Button  display={{base: "none", sm:"block"}} fontSize={14} h={{ base: 6, sm: 7, md: 8, lg: 9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
-            Priority
-        </Button>
-      </HStack>
-      <Button fontSize={14} display={{base: "none", sm:"block"}} h={{ base: 6, sm: 7, md: 8, lg: 9 }} fontWeight={'normal'} color={'gray.700'} borderWidth={"1px"} bg={'white'} leftIcon={<RiEqualizerLine /> }>
-         View
-      </Button>
     </Flex>
     <ListeTask  />
     <Flex mt={10} justify={'end'}>

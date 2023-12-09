@@ -2,7 +2,6 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/modal"
 import { FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
 import { useEffect, useRef, useState } from "react"
-import { useRouter } from 'next/router'
 import { EDITE_TASK } from "@/graphQl/Mutation/editeTask"
 import { useMutation } from "@apollo/client"
 
@@ -19,7 +18,6 @@ const FormTask = (props: {
 }) => {
   const initialRef = useRef(null)
   const finalRef = useRef(null)
-  const router = useRouter();
   const { nameHeader, nameButton, title, id, description, priority, isOpen, onClose } = props;
   const [newTitle, setTitle] = useState(title)
   const [newDescription, setDescription] = useState(description)
