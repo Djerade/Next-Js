@@ -132,7 +132,7 @@ const ListeTask = () => {
            View
         </Button>
       </Flex>
-      <MobileList  listTask={data?.getAllTasks} />
+      <MobileList  listTask={data} />
       <Flex display={{ base: 'none', sm: "none", md: 'block', lg: "block" }} mt={4} flexDirection={'column'} borderRadius={8} width={'100%'} borderWidth={'1px'}>
       <TableContainer width={'100%'}>
       <Table>
@@ -168,7 +168,7 @@ const ListeTask = () => {
                     ? task
                     : task.title.toLowerCase().includes(search)
                 }).map((t: Task) => (
-              <Tr>
+              <Tr key={t._id}>
               <Td>
                  <HStack spacing={0}>
                       <Checkbox
@@ -231,43 +231,43 @@ const ListeTask = () => {
     )
 }
 
-const MobileList = (props: { listTask:  Task}) => {
+const MobileList = (props: { listTask : any}) => {
   const { listTask } = props;
-  console.log(listTask);
-  
-  return [
-    <Flex mt={5} borderRadius={10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
-      <HStack mb={5} justify={'end'}  spacing={3}>
-         <IconButton  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
-         <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
-      </HStack>
-     
-      <Flex borderRadius={5} pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
-        <Text color={'gray.500'}>
-            Title
-        </Text>
-        <Text fontWeight={'normal'}>
-          Faire la lessive
-        </Text>
-      </Flex>
-      <Flex p={1} borderRadius={5} pl={3} pr={3}  bg={'gray.200'} mb={3} justify={'space-between'} flexDirection={'row'}>
-        <Text color={'gray.500'}>
-            Status
-        </Text>
-        <Text fontWeight={'normal'}>
-          Faire la lessive
-        </Text>
-      </Flex>
-      <Flex borderRadius={5}  pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
-        <Text color={'gray.500'}>
-            Status
-        </Text>
-        <Text fontWeight={'normal'}>
-          Faire la lessive
-        </Text>
-      </Flex>
-     
+  return <>
+    {
+      listTask?.getAllTasks.map((t: Task) => (
+    <Flex key={t._id} bg={"red"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
+        <HStack mb={5} justify={'end'}  spacing={3}>
+           <IconButton  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
+           <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
+        </HStack>
+        <Flex borderRadius={5} pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
+          <Text color={'gray.500'}>
+              Title
+          </Text>
+          <Text fontWeight={'normal'}>
+            { t.title }
+          </Text>
+        </Flex>
+        <Flex p={1} borderRadius={5} pl={3} pr={3}  bg={'gray.200'} mb={3} justify={'space-between'} flexDirection={'row'}>
+          <Text color={'gray.500'}>
+              Description
+          </Text>
+          <Text fontWeight={'normal'}>
+            { t.description }
+          </Text>
+        </Flex>
+        <Flex borderRadius={5}  pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
+          <Text color={'gray.500'}>
+              Status
+          </Text>
+          <Text fontWeight={'normal'}>
+            { t.status }
+          </Text>
+        </Flex>
     </Flex>
-  ]
+      ))
+  }  
+  </>
 }
 export default ListeTask;
