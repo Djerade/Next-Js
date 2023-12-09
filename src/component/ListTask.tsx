@@ -236,7 +236,7 @@ const MobileList = (props: { listTask : any}) => {
   return <>
     {
       listTask?.getAllTasks.map((t: Task) => (
-    <Flex key={t._id} bg={"red"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
+    <Flex key={t._id} bg={"gray.100"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
         <HStack mb={5} justify={'end'}  spacing={3}>
            <IconButton  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
            <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
