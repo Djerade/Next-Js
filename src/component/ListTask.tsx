@@ -239,13 +239,11 @@ const ListeTask = () => {
 const MobileList = (props: {
   TaskList: () => Task[]
 }) => {
-  const { TaskList } = props
-  console.log('--->',TaskList.length);
-  
+  const { TaskList } = props  
   return <>
-     {/* {
-      filterTask().map((t: Task) => (
-    <Flex key={t._id} bg={"whiteAlpha.400"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
+    {
+      TaskList().map((t: Task) => (
+            <Flex key={t._id} bg={"whiteAlpha.400"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
         <HStack mb={5} justify={'end'}  spacing={3}>
            <IconButton  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
            <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
@@ -276,8 +274,7 @@ const MobileList = (props: {
         </Flex>
     </Flex>
       ))
-  }   */}
-    <p>mobile   </p>
+    }
   </>
 }
 export default ListeTask;
