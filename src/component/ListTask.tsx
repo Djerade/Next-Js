@@ -79,7 +79,6 @@ const ListeTask = () => {
     setediteDESCRIPTION(description),
     seteditePRIORITY(priority)
   }  
-  const datas: Task[] = data;
 
   // console.log('data found',data.getAllTasks.filter((task: Task) => task.title.includes("ti")));
   
@@ -111,7 +110,17 @@ const ListeTask = () => {
   }
 
   function handleCheck(id: string) {
-    listTaskChecked.includes(id) ? setlistTaskChecked([...listTaskChecked.filter(Id => Id !== id)]) :  setlistTaskChecked([...listTaskChecked, id]);
+    listTaskChecked.includes(id)
+      ? setlistTaskChecked([...listTaskChecked.filter(Id => Id !== id)])
+      : setlistTaskChecked([...listTaskChecked, id]);
+  }
+
+  function filterTask(): Task[] {
+    return data?.getAllTasks.filter((task: Task) => {
+                  return search.toLowerCase() === ''
+                    ? task
+                    : task.title.toLowerCase().includes(search)
+                })
   }
 
   if (loading) return <Center>Loading...</Center>;
@@ -120,7 +129,7 @@ const ListeTask = () => {
     <>
       <Flex justify={{ base:"center", sm:'center',  md:"space-between", lg:"space-between"}} >
         <HStack  spacing={5}>
-          <Input onChange={(t) => setsearch(t.target.value)}  fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} placeholder='Filter tasks...'  size={{ base:"md", md:'md', lg:"lg" }} w={{ base: "xs", sm: "sm", md: "md", lg: "lg" }} />
+          <Input onChange={(t) => setsearch(t.target.value)}  fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} placeholder='Filter tasks...' height={{base: "10", sm:"md"}}  size={{ base:"xs", md:'md', lg:"lg" }} w={{ base: "md", sm: "lg", md: "md", lg: "lg" }} />
           <Button display={{base: "none", sm:"block"}} fontSize={14} h={{ base: 6, sm: 7, md: 8, lg:9 }} fontWeight={'normal'} color={'gray.700'}  borderWidth={"1px"} bg={'white'} leftIcon={<FiPlusCircle/>}>
               Status
           </Button>
@@ -132,7 +141,7 @@ const ListeTask = () => {
            View
         </Button>
       </Flex>
-      <MobileList  listTask={data} />
+      <MobileList TaskList = {filterTask} />
       <Flex display={{ base: 'none', sm: "none", md: 'block', lg: "block" }} mt={4} flexDirection={'column'} borderRadius={8} width={'100%'} borderWidth={'1px'}>
       <TableContainer width={'100%'}>
       <Table>
@@ -163,11 +172,7 @@ const ListeTask = () => {
           </Thead>
            <Tbody>
             {
-                data?.getAllTasks.filter((task: Task) => {
-                  return search.toLowerCase() === ''
-                    ? task
-                    : task.title.toLowerCase().includes(search)
-                }).map((t: Task) => (
+             filterTask().map((t: Task) => (
               <Tr key={t._id}>
               <Td>
                  <HStack spacing={0}>
@@ -231,12 +236,16 @@ const ListeTask = () => {
     )
 }
 
-const MobileList = (props: { listTask : any}) => {
-  const { listTask } = props;
+const MobileList = (props: {
+  TaskList: () => Task[]
+}) => {
+  const { TaskList } = props
+  console.log('--->',TaskList.length);
+  
   return <>
-    {
-      listTask?.getAllTasks.map((t: Task) => (
-    <Flex key={t._id} bg={"gray.100"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
+     {/* {
+      filterTask().map((t: Task) => (
+    <Flex key={t._id} bg={"whiteAlpha.400"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
         <HStack mb={5} justify={'end'}  spacing={3}>
            <IconButton  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
            <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
@@ -249,7 +258,7 @@ const MobileList = (props: { listTask : any}) => {
             { t.title }
           </Text>
         </Flex>
-        <Flex p={1} borderRadius={5} pl={3} pr={3}  bg={'gray.200'} mb={3} justify={'space-between'} flexDirection={'row'}>
+        <Flex p={1} borderRadius={5} pl={3} pr={3}  bg={'gray.100'} mb={3} justify={'space-between'} flexDirection={'row'}>
           <Text color={'gray.500'}>
               Description
           </Text>
@@ -267,7 +276,8 @@ const MobileList = (props: { listTask : any}) => {
         </Flex>
     </Flex>
       ))
-  }  
+  }   */}
+    <p>mobile   </p>
   </>
 }
 export default ListeTask;
