@@ -19,6 +19,7 @@ import { GET_TASKS } from "@/graphQl/Queries/getTasks";
 import FormTask from "./editeForm";
 import { RiEqualizerLine } from "react-icons/ri";
 import { FiPlusCircle } from 'react-icons/fi';
+import MobileList from "./mobileList";
 
 interface Task {
   _id: any
@@ -30,11 +31,8 @@ interface Task {
 
 const ListeTask = () => {
   const [Id, setId] = useState('')
-  const [allCheck, setallCheck] = useState(false)
   const [search, setsearch] = useState<string>('')
   const [taskList, settaskList] = useState<Task>()
-  const [TaskFound, setTaskFound] = useState()
-  const [checkTask, setcheckTask] = useState(false)
   const [listTaskChecked, setlistTaskChecked] = useState<string[]>([])
   const [editeID, setediteID] = useState<string>()
   const [editeTITLE, setediteTITLE] = useState<string>()
@@ -82,7 +80,7 @@ const ListeTask = () => {
 
   // console.log('data found',data.getAllTasks.filter((task: Task) => task.title.includes("ti")));
   
-  const deleteTask = (id: any) => {
+  async function deleteTask(id: any) {
     setId(id)
     detete()
   }
@@ -236,45 +234,4 @@ const ListeTask = () => {
     )
 }
 
-const MobileList = (props: {
-  TaskList: () => Task[]
-}) => {
-  const { TaskList } = props  
-  return <>
-    {
-      TaskList().map((t: Task) => (
-            <Flex key={t._id} bg={"whiteAlpha.400"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
-        <HStack mb={5} justify={'end'}  spacing={3}>
-           <IconButton  _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
-           <IconButton  _hover={{ bg: "gray.100"}} bg={'white'} icon={<AiOutlineDelete />} aria-label={''} />
-        </HStack>
-        <Flex borderRadius={5} pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
-          <Text color={'gray.500'}>
-              Title
-          </Text>
-          <Text fontWeight={'normal'}>
-            { t.title }
-          </Text>
-        </Flex>
-        <Flex p={1} borderRadius={5} pl={3} pr={3}  bg={'gray.100'} mb={3} justify={'space-between'} flexDirection={'row'}>
-          <Text color={'gray.500'}>
-              Description
-          </Text>
-          <Text fontWeight={'normal'}>
-            { t.description }
-          </Text>
-        </Flex>
-        <Flex borderRadius={5}  pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
-          <Text color={'gray.500'}>
-              Status
-          </Text>
-          <Text fontWeight={'normal'}>
-            { t.status }
-          </Text>
-        </Flex>
-    </Flex>
-      ))
-    }
-  </>
-}
 export default ListeTask;
