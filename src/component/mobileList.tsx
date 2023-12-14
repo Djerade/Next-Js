@@ -41,8 +41,8 @@ const MobileList = (props: {
   }
   return <>
     {
-      TaskList().map((t: Task) => (
-            <Flex key={t._id} bg={"whiteAlpha.400"} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
+      TaskList()?.map((t: Task) => (
+       <Flex key={t._id} bg={"whiteAlpha.400"} pb={3} border="1px" borderColor={'gray.200'} shadow={'md'} mb={3} mt={5} borderRadius=  {10} pr={6} pt={2}  pl={6} w={'full'}  display={{ base:'block', sm: "block", md:'none', lg:"none" }} flexDirection={'column'}>
         <HStack mb={5} justify={'end'}  spacing={3}>
             <Flex>
               <IconButton onClick={() => { onOpen(), editTask(t._id, t.title, t.description, t.priority ) }} _hover={{ bg: "gray.100" }} bg={'white'} icon={<FiEdit2/>} aria-label={''} />
@@ -73,8 +73,8 @@ const MobileList = (props: {
           <Text fontWeight={'normal'}>
             { t.status }
           </Text>
-          </Flex>
-          <Flex borderRadius={5}  pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
+        </Flex>
+        <Flex p={2} bg={'gray.100'} borderRadius={5}  pl={2} pr={2} mb={3} justify={'space-between'} flexDirection={'row'}>
             <Text color={'gray.500'} fontSize={'sm'} variant=''>{t.priority}</Text>
             <Icon color={'gray.700'} boxSize={('15px')} as={t.priority === 'Medium'? FiArrowRight : t.priority ==='High'? AiOutlineArrowUp: FiArrowDown}/>
         </Flex>

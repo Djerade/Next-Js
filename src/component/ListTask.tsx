@@ -16,10 +16,12 @@ import { DELETE_TASK } from "@/graphQl/Mutation/deleteTask";
 
 //Queries
 import { GET_TASKS } from "@/graphQl/Queries/getTasks";
-import FormTask from "./editeForm";
 import { RiEqualizerLine } from "react-icons/ri";
 import { FiPlusCircle } from 'react-icons/fi';
 import MobileList from "./mobileList";
+
+//Component
+import FormTask from "./editeForm";
 
 interface Task {
   _id: any
@@ -84,6 +86,7 @@ const ListeTask = () => {
     setId(id)
     detete()
   }
+
   const taskDone = (id: any, status: string) => {
     if (status ==='DONE') {
       setStatus('TODO')
@@ -170,7 +173,7 @@ const ListeTask = () => {
           </Thead>
            <Tbody>
             {
-             filterTask().map((t: Task) => (
+             filterTask()?.map((t: Task) => (
               <Tr key={t._id}>
               <Td>
                  <HStack spacing={0}>
