@@ -1,5 +1,5 @@
 import { Text, Flex, useDisclosure, HStack,IconButton, Center, Icon, Checkbox, Button, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Popover, PopoverTrigger, PopoverContent, PopoverBody, flexbox, VStack, Input } from "@chakra-ui/react";
-import { MdOutlineTaskAlt } from "react-icons/Md";
+import { MdOutlineTaskAlt } from "react-icons/md";
 import { AiOutlineArrowUp, AiOutlineDelete } from "react-icons/ai";
 import { BsChevronExpand } from "react-icons/bs";
 import { FiArrowRight, FiEdit2, FiMoreHorizontal } from "react-icons/fi";
@@ -194,7 +194,7 @@ const ListeTask = () => {
               </Td>
               <Td>    
                 <HStack display={{ base: "none", sm:"flex"}} spacing={1}>
-                  <Icon color={'gray.700'} boxSize={('15px')} as={t.status === 'TODO'? FiCircle  : MdOutlineTaskAlt }/>
+                  <Icon color={'gray.700'} boxSize={('15px')} as={t.status === 'TODO'? FiCircle  : MdOutlineTaskAlt }/> 
                   <Text color={'gray.700'} fontSize={'sm'} variant=''>{t.status}</Text>
                 </HStack>
               </Td>
