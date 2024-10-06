@@ -5,7 +5,7 @@ import { ApolloClient,  ApolloProvider, InMemoryCache } from "@apollo/client";
 
 
 const client = new ApolloClient({
-  uri:'http://localhost:5000/graphql',
+  uri: 'https://todo-server-cqax.onrender.com/graphql',
   cache: new InMemoryCache(),
 });
 
